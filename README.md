@@ -1,4 +1,4 @@
-# yexuejc-base
+# yexuejc-springboot-base
 
 基于springboot maven 封装可继承基础工程
 
