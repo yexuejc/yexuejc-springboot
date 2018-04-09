@@ -2,6 +2,27 @@
 
 基于springboot maven 封装可继承基础工程
 
+### 引用
+>yexuejc.springboot.version=1.0.3
+
+pom.xml
+```
+<dependencies>
+    <dependency>
+        <groupId>com.github.yexuejc</groupId>
+        <artifactId>yexuejc-springboot</artifactId>
+        <version>${yexuejc.springboot.version}</version>
+    </dependency>
+</dependencies>
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+
 ### 目录
 <table>
     <tr>
