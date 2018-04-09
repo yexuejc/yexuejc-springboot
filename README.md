@@ -13,31 +13,31 @@
         <td>核心配置</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.autoconfigure.*</td>
+        <td>com.yexuejc.springboot.base.autoconfigure.*</td>
         <td>模块封装</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.constant.*</td>
+        <td>com.yexuejc.springboot.base.constant.*</td>
         <td>系统常量</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.filter.*</td>
+        <td>com.yexuejc.springboot.base.filter.*</td>
         <td>过滤器</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.interceptor.*</td>
+        <td>com.yexuejc.springboot.base.interceptor.*</td>
         <td>拦截器</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.http.*</td>
+        <td>com.yexuejc.springboot.base.http.*</td>
         <td>网络层</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.pojo.*</td>
+        <td>com.yexuejc.springboot.base.pojo.*</td>
         <td>bean</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.util.*</td>
+        <td>com.yexuejc.springboot.base.util.*</td>
         <td>工具包</td>
     </tr>
     <tr>
@@ -45,7 +45,7 @@
         <td>测试部分</td>
     </tr>
     <tr>
-        <td>com.yexuejc.base.ApplicationRun</td>
+        <td>com.yexuejc.springboot.base.ApplicationRun</td>
         <td>测试启动入口</td>
     </tr>
 </table>
