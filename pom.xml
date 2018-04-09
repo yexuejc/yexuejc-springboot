@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.yexuejc.springboot</groupId>
+    <artifactId>yexuejc-springboot-parent</artifactId>
+    <version>1.0.3</version>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>yexuejc-springboot-parent project for Spring Boot</description>
+
+    <parent>
+        <!-- spring boot父级,包含了统一版本管理,统一插件管理等 -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <repos.yexuejc.ivt.url>http://47.100.13.178:7081/nexus/content/groups/public</repos.yexuejc.ivt.url>
+        <repos.yexuejc.prod.url>http://47.100.13.178:7081/nexus/content/groups/public</repos.yexuejc.prod.url>
+        <repos.yexuejc.dist.url>http://47.100.13.178:7081/nexus/content/repositories</repos.yexuejc.dist.url>
+
+        <repos.aliyun.url>http://maven.aliyun.com/nexus/content/groups/public</repos.aliyun.url>
+        <repos.jitpack.url>https://jitpack.io</repos.jitpack.url>
+
+
+        <maven.compiler.verbose>true</maven.compiler.verbose>
+        <java.version>1.8</java.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <springfox-swagger2.version>2.2.2</springfox-swagger2.version>
+        <mybatis-spring-boot-starter.version>1.2.0</mybatis-spring-boot-starter.version>
+        <mybatis.version>3.4.2</mybatis.version>
+
+        <yexuejc.base.version>1.0.0</yexuejc.base.version>
+        <jjwt.version>0.7.0</jjwt.version>
+        <fastjson.version>1.1.46</fastjson.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <!-- 阿里云相关 -->
+        <aliyun-java-sdk-core.version>2.1.7</aliyun-java-sdk-core.version>
+        <aliyun-java-sdk-sts.version>2.1.6</aliyun-java-sdk-sts.version>
+        <aliyun-sdk-oss.version>2.8.1</aliyun-sdk-oss.version>
+        <aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
+        <aliyun-sdk-mns.version>1.1.8</aliyun-sdk-mns.version>
+        <!-- 支付宝相关 -->
+        <alipay-sdk-java.version>20171023143759</alipay-sdk-java.version>
+        <!-- 微信相关 -->
+        <WXPay-SDK-Java.version>0.0.4</WXPay-SDK-Java.version>
+        <postgresql.version>9.4.1212</postgresql.version>
+        <!--thymeleaf 相关-->
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
+        <thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
+    </properties>
+    <!-- 声明包版本 继承项目自引入 -->
+    <dependencyManagement>
+        <dependencies>
+            <!--基础包-->
+            <dependency>
+                <groupId>com.github.yexuejc</groupId>
+                <artifactId>yexuejc-base</artifactId>
+                <version>${yexuejc.base.version}</version>
+            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.yexuejc.base</groupId>-->
+                <!--<artifactId>yexuejc-base</artifactId>-->
+                <!--<version>${yexuejc.base.version}</version>-->
+            <!--</dependency>-->
+            <!-- 编码包 说明：http://blog.csdn.net/jianggujin/article/details/51149133 -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <!-- JJWT -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- MVC数据校验框架 -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+            <!-- swagger2 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <!-- 使用mybatis的starter -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+                <exclusions>
+                    <!-- 禁用默认的tomcat连接池 -->
+                    <exclusion>
+                        <groupId>org.apache.tomcat</groupId>
+                        <artifactId>tomcat-jdbc</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- mybatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- PostgreSQL JDBC Driver（JDK1.8版） -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+
+
+            <!-- 支付宝支付SDK -->
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay-sdk-java.version}</version>
+            </dependency>
+            <!-- 微信支付SDK -->
+            <dependency>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>WXPay-SDK-Java</artifactId>
+                <version>${WXPay-SDK-Java.version}</version>
+            </dependency>
+            <!-- 阿里云基础SDK -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun-java-sdk-core.version}</version>
+            </dependency>
+            <!-- 阿里云STS相关SDK -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-sts</artifactId>
+                <version>${aliyun-java-sdk-sts.version}</version>
+            </dependency>
+            <!-- 阿里云OSS相关SDK -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-sdk-oss.version}</version>
+            </dependency>
+            <!-- 阿里云短信服务SMS相关SDK -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>${aliyun-java-sdk-dysmsapi.version}</version>
+            </dependency>
+            <!-- 阿里云消息服务MNS相关SDK -->
+            <dependency>
+                <groupId>com.aliyun.mns</groupId>
+                <artifactId>aliyun-sdk-mns</artifactId>
+                <version>${aliyun-sdk-mns.version}</version>
+                <classifier>jar-with-dependencies</classifier>
+            </dependency>
+
+            <!-- spring-boot-admin相关 -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-turbine</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui-activiti</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <!-- 打包源码 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 使用spring boot的maven插件进行打包 -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- 是否打出可执行的jar包(仅支持Linux格式) -->
+                        <executable>false</executable>
+                    </configuration>
+                </plugin>
+                <!-- 将jar包和外部配置等文件整体打包(zip,tar等) -->
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <finalName>${project.artifactId}-${project.version}</finalName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>full</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                            <configuration>
+                                <descriptor>${basedir}/assembly/assembly.xml</descriptor>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>yexuejc-prod-nexus-public</id>
+            <name>yexuejc-prod-nexus-public</name>
+            <url>${repos.yexuejc.prod.url}</url>
+        </repository>
+        <repository>
+            <id>yexuejc-ivt-nexus-public</id>
+            <name>yexuejc-ivt-nexus-public</name>
+            <url>${repos.yexuejc.ivt.url}</url>
+        </repository>
+        <repository>
+            <id>aliyun-nexus-public</id>
+            <name>aliyun-nexus-public</name>
+            <url>${repos.aliyun.url}</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>${repos.jitpack.url}</url>
+        </repository>
+    </repositories>
+    <!-- 中间件jar包发布目标 -->
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>nexus-release</name>
+            <url>${repos.yexuejc.dist.url}/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>nexus-snapshots</name>
+            <url>${repos.yexuejc.dist.url}/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <modules>
+        <module>yexuejc-springboot-base</module>
+    </modules>
+</project>

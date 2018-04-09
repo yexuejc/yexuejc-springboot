@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 固定配置 START -->
+	<property name="context.name" value="yexuejc-springboot-base" />
+
+	<property name="log.path" value="../logs" />
+	<property name="log.pattern"
+		value='%d{yyyy-MM-dd_HH:mm:ss.SSS};%level;%C{0};%M;%L;%msg%n' />
+	<property name="roll.file.suffix" value="%d{yyyy-MM-dd}.tar.gz" />
+	<contextName>${context.name}</contextName>
+	<appender name="ACCESS"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/access.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/access.${roll.file.suffix}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="BIZ"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/biz.${roll.file.suffix}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="EXCEPTION"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/exception.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/exception.${roll.file.suffix}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+	<logger name="com.yexuejc.uselaw.access" level="INFO">
+		<appender-ref ref="ACCESS" />
+	</logger>
+	<logger name="com.yexuejc.uselaw.biz" level="INFO">
+		<appender-ref ref="BIZ" />
+	</logger>
+	<logger name="com.yexuejc.uselaw.exception" level="ERROR">
+		<appender-ref ref="EXCEPTION" />
+	</logger>
+	<!-- 固定配置 END -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder 默认配置为PatternLayoutEncoder -->
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+	</appender>
+	<root level="debug">
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration>

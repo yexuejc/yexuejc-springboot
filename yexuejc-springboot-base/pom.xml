@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>yexuejc-springboot-base</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>com.yexuejc.springboot</groupId>
+        <artifactId>yexuejc-springboot-parent</artifactId>
+        <version>1.0.3</version>
+        <!-- 本地打包：使用相对关联路径 -->
+        <!--<relativePath>../../yexuejc</relativePath>-->
+    </parent>
+
+    <name>${project.artifactId}</name>
+
+    <!--<properties>-->
+    <!--<main.basedir>${basedir}/..</main.basedir>-->
+    <!--</properties>-->
+
+    <dependencies>
+        <!--基础包-->
+        <dependency>
+            <groupId>com.github.yexuejc</groupId>
+            <artifactId>yexuejc-base</artifactId>
+        </dependency>
+        <!-- 使用springMVC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <optional>true</optional><!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖base项目的项目如果想要使用devtools，需要重新引入 -->
+        </dependency>
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- 用于生成application.properties等配置文件中的自定义配置项(非默认项)的meta-data -->
+        <!-- meta-data用于帮助IDE自动完成代码。程序运行不需要该依赖,可以不用引入,只是用于消除STS的警告信息 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- 阿里云基础SDK -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- 阿里云OSS相关SDK -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- JJWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- 使用Redis -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
