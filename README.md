@@ -1,17 +1,38 @@
 # yexuejc-springboot-base
 
+
+#### 项目介绍
 基于springboot maven 封装可继承基础工程
 
-### 引用
->yexuejc.springboot.version=1.0.3
+内含parent和base工程可分开使用
+parent：版本封装
+base:功能封装
+
+#### 引用
+>yexuejc.springboot.version=1.0.4
 
 pom.xml
 ```
+<!--parent 引用-->
+<parent>
+    <groupId>com.github.yexuejc.yexuejc-springboot</groupId>
+    <artifactId>yexuejc-springboot-parent</artifactId>
+    <version>${yexuejc.springboot.version}</version>
+</parent>
+
 <dependencies>
+    <!--base 引用-->
+    <dependency>
+        <groupId>com.github.yexuejc.yexuejc-springboot</groupId>
+        <artifactId>yexuejc-springboot-base</artifactId>
+        <version>${parent.version}</version>
+    </dependency>
+    <!--推荐使用-->
+    <!--https://gitee.com/incloudcode/yexuejc-base.git-->
     <dependency>
         <groupId>com.github.yexuejc</groupId>
-        <artifactId>yexuejc-springboot</artifactId>
-        <version>${yexuejc.springboot.version}</version>
+        <artifactId>yexuejc-base</artifactId>
+        <version>${yexuejc.base.version}</version>
     </dependency>
 </dependencies>
 <repositories>
@@ -23,7 +44,7 @@ pom.xml
 ```
 
 
-### 目录
+#### 目录
 <table>
     <tr>
         <td>\src\main\java</td>
@@ -70,3 +91,8 @@ pom.xml
         <td>测试启动入口</td>
     </tr>
 </table>
+
+
+#### 版本更新
+
+[更新记录](UPDATE.md)
