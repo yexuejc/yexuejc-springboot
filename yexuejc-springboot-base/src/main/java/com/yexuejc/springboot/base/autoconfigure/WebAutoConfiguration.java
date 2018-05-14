@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.util.DateUtil;
+import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.filter.ValidationFilter;
 import com.yexuejc.springboot.base.filter.ValidationFilterProperties;
 import com.yexuejc.springboot.base.interceptor.LogInterceptor;
@@ -19,13 +20,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * WebMvc相关配置
@@ -44,6 +51,28 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
     public WebAutoConfiguration(ValidationFilterProperties properties) {
         this.properties = properties;
     }
+
+    /******************************************编码部分*****************************************************/
+    @Bean
+    public HttpMessageConverter<String> responseBodyConverter() {
+        StringHttpMessageConverter converter = new StringHttpMessageConverter(
+                Charset.forName("UTF-8"));
+        return converter;
+    }
+
+    @Override
+    public void configureMessageConverters(
+            List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+        converters.add(responseBodyConverter());
+    }
+
+    @Override
+    public void configureContentNegotiation(
+            ContentNegotiationConfigurer configurer) {
+        configurer.favorPathExtension(false);
+    }
+    /******************************************编码部分*****************************************************/
 
     /**
      * 添加拦截器
@@ -108,7 +137,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
         @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
         public Resps<Object> jsonErrorHandler(Throwable e) {
             LogUtil.exceptionLogger.error(e.getMessage(), e);
-            return Resps.error(ERROR_MSG);
+            return Resps.error(StrUtil.setStr(e.getMessage(), ERROR_MSG));
         }
     }
 }

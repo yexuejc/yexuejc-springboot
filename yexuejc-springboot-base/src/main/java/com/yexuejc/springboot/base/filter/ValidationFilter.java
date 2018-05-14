@@ -13,8 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 过滤器配置
+ *
+ * @version 1.0.5
+ * @ClassName: ValidationFilter
+ * @Description:
+ * @author: maxf
+ * @date: 2018/5/14 17:49
+ */
 public class ValidationFilter implements Filter {
-
     ValidationFilterProperties properties;
 
     public ValidationFilter(ValidationFilterProperties properties) {
@@ -26,6 +34,24 @@ public class ValidationFilter implements Filter {
 
     }
 
+    /**
+     * 请求安全
+     * 解决方案：
+     * header头添加X-User-Agent：授权
+     * 入参取时间戳，先MD5，然后进行RSA非对称加密
+     * 按顺序解密：
+     * 1.防泄漏：RSA解密
+     * 2.防篡改：md5参数校验
+     * 3.防重复请求：时间戳（一分钟时间差）
+     * 4.防XSS攻击：header头添加X-User-Agent授权
+     * 5.登录角色token授权
+     *
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
@@ -46,6 +72,9 @@ public class ValidationFilter implements Filter {
                 return;
             }
         }
+        /**
+         * stop1：header头 校验
+         */
         String xuserAgent = request.getHeader(RespsConsts.HEADER_X_USER_AGENT);
         if (xuserAgent == null || xuserAgent.length() == 0) {
             // 写日志
@@ -68,4 +97,6 @@ public class ValidationFilter implements Filter {
     public void destroy() {
 
     }
+
+
 }

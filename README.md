@@ -4,8 +4,8 @@
 #### 项目介绍
 基于springboot maven 封装可继承基础工程
 
-内含parent和base工程可分开使用
-parent：版本封装
+内含parent和base工程可分开使用<br/>
+parent：版本封装<br/>
 base:功能封装
 
 #### 引用
@@ -96,3 +96,6 @@ pom.xml
 #### 版本更新
 
 [更新记录](UPDATE.md)
+<br/>
+[1.0.5新增 针对API请求安全解决方案](PARAMS_RSA_DECRYPT_ENCRYPT.md)<br/>
+[1.0.5新增 加密功能](PARAMS_RSA_DECRYPT_ENCRYPT.md)
