@@ -1,7 +1,8 @@
 uselaw-base 更新内容
 -------------------
 
-#### version ：1.0.5
+#### version ：1.0.6 ~~1.0.5~~
+**change:2018-5-15 09:24:37** 1.0.5 jitpack打包失败，升级版本1.0.6
 **time：** 2018-5-4 09:54:18<br/>
 **branch：** master    <br/>
 **update：**     <br/>
