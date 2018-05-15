@@ -95,7 +95,13 @@ params.setData(RSA.publicEncrypt(datas, RSA.getPublicKey(properties.getPublicKey
 ### 配置
 1. 服务器配置私钥
 ```
+#配置密钥方式
 yexuejc.http.encrypt.private-key=私钥
+#配置证书方式：方式二选一，两者都配置会选择配置密钥方式
+yexuejc.http.encrypt.private-key-path=/lgfishing.keystore
+yexuejc.http.encrypt.private-alias=lgfishing
+yexuejc.http.encrypt.private-pwd=lgfishing2018
+
 yexuejc.http.encrypt.encrypt=true //加密：默认false
 yexuejc.http.encrypt.decrypt=true //解密：默认false
 ```

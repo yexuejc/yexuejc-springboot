@@ -1,10 +1,11 @@
 package com.yexuejc.springboot.base.filter;
 
+import com.yexuejc.base.encrypt.RSA;
+import com.yexuejc.base.encrypt.RSA2;
 import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.util.LogUtil;
-import com.yexuejc.springboot.base.util.RSA;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -13,8 +14,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.interfaces.RSAPrivateKey;
 import java.util.List;
 import java.util.Map;
 
@@ -69,13 +69,19 @@ public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
                     }
                     resps.setSign(StrUtil.toMD5(data));
                     try {
+                        RSAPrivateKey rsaPrivateKey = null;
+                        if (StrUtil.isEmpty(properties.getPrivateKey())) {
+                            rsaPrivateKey = RSA2.getPrivateKey(
+                                    this.getClass().getResource(properties.getPrivateKeyPath()).getFile().toString(),
+                                    properties.getPrivateAlias(),
+                                    properties.getPrivatePwd());
+                        } else {
+                            rsaPrivateKey = RSA.getPrivateKey(properties.getPrivateKey());
+                        }
                         resps.setData(
-                                RSA.privateEncrypt(JsonUtil.obj2Json(resps.getData()), RSA.getPrivateKey(properties.getPrivateKey()))
+                                RSA.privateEncrypt(JsonUtil.obj2Json(resps.getData()), rsaPrivateKey)
                         );
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                        LogUtil.accessLogger.error("出参加密错误，进行明文出参{}。\n异常信息：{}", JsonUtil.obj2Json(resps), e.getMessage());
-                    } catch (InvalidKeySpecException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         LogUtil.accessLogger.error("出参加密错误，进行明文出参{}。\n异常信息：{}", JsonUtil.obj2Json(resps), e.getMessage());
                     }

@@ -1,11 +1,12 @@
 package com.yexuejc.springboot.base.filter;
 
+import com.yexuejc.base.encrypt.RSA;
+import com.yexuejc.base.encrypt.RSA2;
 import com.yexuejc.base.pojo.ParamsPO;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.exception.GatewayException;
 import com.yexuejc.springboot.base.util.LogUtil;
-import com.yexuejc.springboot.base.util.RSA;
 import org.apache.commons.io.IOUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.MethodParameter;
@@ -18,10 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.List;
-import java.util.Map;
+import java.security.interfaces.RSAPrivateKey;
 
 /**
  * 请求数据解密
@@ -59,10 +57,19 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
             //RSA解密
             try {
                 long t = System.currentTimeMillis();
+                RSAPrivateKey rsaPrivateKey = null;
+                if (StrUtil.isEmpty(properties.getPrivateKey())) {
+                    rsaPrivateKey = RSA2.getPrivateKey(
+                            this.getClass().getResource(properties.getPrivateKeyPath()).getFile().toString(),
+                            properties.getPrivateAlias(),
+                            properties.getPrivatePwd());
+                } else {
+                    rsaPrivateKey = RSA.getPrivateKey(properties.getPrivateKey());
+                }
                 String data = new String(
                         RSA.privateDecrypt(
                                 paramsPO.getData(),
-                                RSA.getPrivateKey(properties.getPrivateKey())
+                                rsaPrivateKey
                         )
                 );
                 //md5 校验
@@ -73,15 +80,9 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
                 InputStream body = IOUtils.toInputStream(JsonUtil.obj2Json(StrUtil.parseUrlencoded(data)), "UTF-8");
                 LogUtil.accessLogger.info("解密耗时：{}", System.currentTimeMillis() - t);
                 return new MyHttpInputMessage(inputMessage.getHeaders(), body);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-                throw new GatewayException("data错误");
-            } catch (InvalidKeySpecException e) {
-                e.printStackTrace();
-                throw new GatewayException("data错误");
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new GatewayException("data错误");
+                LogUtil.accessLogger.error("解密失败，直接传递参数{}。\n异常信息：{}", JsonUtil.obj2Json(paramsPO), e);
             }
         }
         return inputMessage;

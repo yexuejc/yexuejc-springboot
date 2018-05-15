@@ -17,9 +17,26 @@ public class RsaProperties {
      */
     private String privateKey = "";
     /**
+     * 私钥证书路径：默认private.keystore
+     */
+    private String privateKeyPath = "/private.keystore";
+    /**
+     * 私钥证书别名
+     */
+    private String privateAlias = "alias";
+    /**
+     * 私钥证书密码
+     */
+    private String privatePwd = "password";
+    /**
      * 公钥
      */
     private String publicKey = "";
+    /**
+     * 公钥证书路径：默认public.cer
+     */
+    private String publicKeyPath = "/public.cer";
+
     /**
      * 是否解密
      */
@@ -40,6 +57,38 @@ public class RsaProperties {
 
     public void setDecrypt(boolean decrypt) {
         this.decrypt = decrypt;
+    }
+
+    public String getPrivateKeyPath() {
+        return privateKeyPath;
+    }
+
+    public void setPrivateKeyPath(String privateKeyPath) {
+        this.privateKeyPath = privateKeyPath;
+    }
+
+    public String getPrivateAlias() {
+        return privateAlias;
+    }
+
+    public void setPrivateAlias(String privateAlias) {
+        this.privateAlias = privateAlias;
+    }
+
+    public String getPrivatePwd() {
+        return privatePwd;
+    }
+
+    public void setPrivatePwd(String privatePwd) {
+        this.privatePwd = privatePwd;
+    }
+
+    public String getPublicKeyPath() {
+        return publicKeyPath;
+    }
+
+    public void setPublicKeyPath(String publicKeyPath) {
+        this.publicKeyPath = publicKeyPath;
     }
 
     public boolean isEncrypt() {

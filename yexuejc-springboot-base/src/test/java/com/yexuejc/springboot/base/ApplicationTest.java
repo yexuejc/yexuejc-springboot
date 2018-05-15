@@ -1,17 +1,22 @@
 package com.yexuejc.springboot.base;
 
+import com.yexuejc.base.encrypt.RSA;
+import com.yexuejc.base.encrypt.RSA2;
 import com.yexuejc.base.pojo.ParamsPO;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.filter.RsaProperties;
-import com.yexuejc.springboot.base.util.RSA;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.IOException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +30,12 @@ public class ApplicationTest {
     @Autowired
     RsaProperties properties;
 
+    /**
+     * 客户端加密
+     *
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
     @Test
     public void contextLoads() throws InvalidKeySpecException, NoSuchAlgorithmException {
         Map map = new HashMap();
@@ -50,6 +61,12 @@ public class ApplicationTest {
         // "sign":"d46b089cdea6ddbe3a747a27454ae090"}
     }
 
+    /**
+     * 客户端解密
+     *
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
     @Test
     public void t2() throws InvalidKeySpecException, NoSuchAlgorithmException {
 //        String strData = "KrlXChF8LE94EEnycvbi8AygpaZiHKaXH_OmC5sGhGQlvYp1arNk6WW7yR7kAWMLugCS5TKf8FIiYXnyuI8vjA";
@@ -77,7 +94,7 @@ public class ApplicationTest {
 //                ).isEqualTo("fc4ead323d52f2b1122d1a9634c865c6");
 //                ).isEqualTo("c4ca4238a0b923820dcc509a6f75849b");
 //                ).isEqualTo("b326b5062b2f0e69046810717534cb09");
-                ).isEqualTo("c977050805d8d1ebaa1e03525cbaee15");
+        ).isEqualTo("c977050805d8d1ebaa1e03525cbaee15");
 
         //map
         assertThat(
@@ -101,4 +118,42 @@ public class ApplicationTest {
 
     }
 
+
+    /**
+     * 证书操作
+     *
+     * @throws CertificateException
+     * @throws IOException
+     * @throws UnrecoverableKeyException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     */
+    @Test
+    public void file() throws CertificateException, IOException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException {
+        String publicKey = this.getClass().getResource("/lgfishing.cer").getFile().toString();
+        String privateKey = this.getClass().getResource("/lgfishing.keystore").getFile().toString();
+
+        String privatePwd = "lgfishing2018";
+        String privateAlias = "lgfishing";
+
+        String dataStr = "{\"ret\":\"0\",\"ExpireTime\":\"2015/10/28 23:59:59\",\"rettxt\":\"OK\",\"Token\":\"69296128A59798E2D423D3B1A9F766F4\"}'";
+
+/***************************************************************************************************************************************************************************************************************************************/
+        //客户端公钥加密
+        String publicEncryptResult = RSA.publicEncrypt(dataStr, RSA2.getPublicKey(publicKey));
+        System.out.println(publicEncryptResult);
+
+        //服务器私钥解密
+        String privateDecryptResult = RSA.privateDecrypt(publicEncryptResult, RSA2.getPrivateKey(privateKey, privateAlias, privatePwd));
+        System.out.println(privateDecryptResult);
+/***************************************************************************************************************************************************************************************************************************************/
+        //服务器端私钥加密
+        String privateEncryptResult = RSA.privateEncrypt(dataStr, RSA2.getPrivateKey(privateKey, privateAlias, privatePwd));
+        System.out.println(privateEncryptResult);
+
+        //客户端公钥解密
+        String publicDecryptResult = RSA.publicDecrypt(privateEncryptResult, RSA2.getPublicKey(publicKey));
+        System.out.println(publicDecryptResult);
+
+    }
 }

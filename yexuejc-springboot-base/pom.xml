@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.yexuejc.springboot</groupId>
         <artifactId>yexuejc-springboot-parent</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
         <!-- 本地打包：使用相对关联路径 -->
         <!--<relativePath>../../yexuejc</relativePath>-->
     </parent>
@@ -23,12 +23,12 @@
     <dependencies>
         <!--基础包-->
         <!--<dependency>-->
-            <!--<groupId>com.yexuejc.base</groupId>-->
-            <!--<artifactId>yexuejc-base</artifactId>-->
+        <!--<groupId>com.yexuejc.base</groupId>-->
+        <!--<artifactId>yexuejc-base</artifactId>-->
         <!--</dependency>-->
         <dependency>
-        <groupId>com.github.yexuejc</groupId>
-        <artifactId>yexuejc-base</artifactId>
+            <groupId>com.github.yexuejc</groupId>
+            <artifactId>yexuejc-base</artifactId>
         </dependency>
         <!-- 使用springMVC -->
         <dependency>

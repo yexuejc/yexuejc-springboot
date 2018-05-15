@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -16,7 +16,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.12.RELEASE</version>
-       <!--  <relativePath/> lookup parent from repository -->
+        <!--  <relativePath/> lookup parent from repository -->
     </parent>
 
     <properties>
@@ -35,7 +35,7 @@
         <mybatis-spring-boot-starter.version>1.2.0</mybatis-spring-boot-starter.version>
         <mybatis.version>3.4.2</mybatis.version>
 
-        <yexuejc.base.version>1.1.0</yexuejc.base.version>
+        <yexuejc.base.version>1.1.1</yexuejc.base.version>
         <jjwt.version>0.7.0</jjwt.version>
         <fastjson.version>1.1.46</fastjson.version>
         <commons-codec.version>1.10</commons-codec.version>
@@ -64,11 +64,11 @@
                 <artifactId>yexuejc-base</artifactId>
                 <version>${yexuejc.base.version}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>com.yexuejc.base</groupId>-->
-                <!--<artifactId>yexuejc-base</artifactId>-->
-                <!--<version>${yexuejc.base.version}</version>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>com.yexuejc.base</groupId>
+                <artifactId>yexuejc-base</artifactId>
+                <version>${yexuejc.base.version}</version>
+            </dependency>
             <!-- 编码包 说明：http://blog.csdn.net/jianggujin/article/details/51149133 -->
             <dependency>
                 <groupId>commons-codec</groupId>
