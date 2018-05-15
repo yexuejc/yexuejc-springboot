@@ -72,6 +72,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
             ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
+
     /******************************************编码部分*****************************************************/
 
     /**
@@ -80,7 +81,14 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 日志拦截器
-        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
+        boolean classFound = false;
+        try {
+            classFound = null != Class.forName("org.springframework.security.core.context.SecurityContextHolder");
+        } catch (ClassNotFoundException e) {
+        }
+        if (classFound) {
+            registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
+        }
         super.addInterceptors(registry);
     }
 

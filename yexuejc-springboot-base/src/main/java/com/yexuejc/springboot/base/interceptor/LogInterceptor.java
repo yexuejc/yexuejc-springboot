@@ -9,7 +9,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 访问日志拦截器，用于记录用户访问日志
@@ -26,24 +25,16 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
         // 如登录用户访问，则记录其用户名（手机号）
         try {
             String username = "";
-            try {
-                if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null
-                        && SecurityContextHolder.getContext().getAuthentication().getName() != null) {
-                    username = SecurityContextHolder.getContext().getAuthentication().getName();
-                }
-            } catch (Exception e) {
-                LogUtil.exceptionLogger.error(e.getMessage(), e);
+            if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null
+                    && SecurityContextHolder.getContext().getAuthentication().getName() != null) {
+                username = SecurityContextHolder.getContext().getAuthentication().getName();
             }
+            String ip = "";
+            ip = NetUtil.getIp(request);
             // 写日志
             String uri = request.getRequestURI();
             String userAgent = LogUtil.format(request.getHeader(HttpHeaders.USER_AGENT));
             String xuserAgent = request.getHeader(RespsConsts.HEADER_X_USER_AGENT);
-            String ip = "";
-            try {
-                ip = NetUtil.getIp(request);
-            } catch (IOException e) {
-                LogUtil.exceptionLogger.error(e.getMessage(), e);
-            }
 
             LogUtil.accessLogger.info("{};{};{};{};{}", uri, userAgent, xuserAgent, ip, username);
         } catch (Exception e) {
