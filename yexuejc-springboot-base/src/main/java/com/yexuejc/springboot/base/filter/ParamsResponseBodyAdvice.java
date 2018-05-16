@@ -28,7 +28,7 @@ import java.util.Map;
  * @author: maxf
  * @date: 2018/5/12 22:50
  */
-@ControllerAdvice(basePackages = "com")
+@ControllerAdvice
 @EnableConfigurationProperties(RsaProperties.class)
 public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
 

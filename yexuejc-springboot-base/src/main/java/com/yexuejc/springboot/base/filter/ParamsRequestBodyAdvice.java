@@ -30,7 +30,7 @@ import java.security.interfaces.RSAPrivateKey;
  * @author: maxf
  * @date: 2018/5/12 22:49
  */
-@ControllerAdvice(basePackages = "com")
+@ControllerAdvice
 @EnableConfigurationProperties(RsaProperties.class)
 public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
 

@@ -1,4 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.yexuejc.springboot.base.autoconfigure.WebAutoConfiguration,\
 com.yexuejc.springboot.base.autoconfigure.OssAutoConfiguration,\
-com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration
+com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration,\
+com.yexuejc.springboot.base.filter.ParamsRequestBodyAdvice,\
+com.yexuejc.springboot.base.filter.ParamsResponseBodyAdvice
+

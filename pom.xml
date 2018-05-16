@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -105,6 +105,7 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger2.version}</version>
             </dependency>
+
             <!-- 使用mybatis的starter -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>

@@ -1,7 +1,26 @@
 uselaw-base 更新内容
 -------------------
 
-#### version ：1.0.7
+#### version ：1.0.8
+**time：** 2018-5-4 09:54:18<br/>
+**branch：** master    <br/>
+**update：**     <br/>
+1. 修复依赖
+2. 使用加密：配置密钥方式/配置密钥方式 二选一
+```
+#加密开关
+yexuejc.http.encrypt.encrypt=true
+yexuejc.http.encrypt.decrypt=true
+#配置密钥方式
+yexuejc.http.encrypt.private-key=私钥
+#配置证书方式
+yexuejc.http.encrypt.private-key-path=/lgfishing.keystore 路径
+yexuejc.http.encrypt.private-alias=别名
+yexuejc.http.encrypt.private-pwd=密码
+```
+
+#
+##### version ：1.0.7
 **time：** 2018-5-4 09:54:18<br/>
 **branch：** master    <br/>
 **update：**     <br/>

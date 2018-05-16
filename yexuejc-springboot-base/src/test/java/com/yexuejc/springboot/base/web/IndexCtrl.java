@@ -4,7 +4,6 @@ import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.pojo.PagerVO;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,7 @@ public class IndexCtrl {
     }
 
     @RequestMapping(value = {"/2"})
-    public Resps a(String name, @Param("name") String pwd) {
+    public Resps a(String name, String pwd) {
         System.out.println("请求参数：name = [" + name + "], pwd = [" + pwd + "]");
         return Resps.success("请求成功").setSucc("id>" + StrUtil.genUUID());
     }

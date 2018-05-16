@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.yexuejc.springboot</groupId>
         <artifactId>yexuejc-springboot-parent</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
         <!-- 本地打包：使用相对关联路径 -->
         <!--<relativePath>../../yexuejc</relativePath>-->
     </parent>
@@ -22,14 +22,15 @@
 
     <dependencies>
         <!--基础包-->
-        <!--<dependency>-->
-        <!--<groupId>com.yexuejc.base</groupId>-->
-        <!--<artifactId>yexuejc-base</artifactId>-->
-        <!--</dependency>-->
         <dependency>
-            <groupId>com.github.yexuejc</groupId>
+            <groupId>com.yexuejc.base</groupId>
             <artifactId>yexuejc-base</artifactId>
         </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.github.yexuejc</groupId>-->
+        <!--<artifactId>yexuejc-base</artifactId>-->
+        <!--</dependency>-->
+
         <!-- 使用springMVC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,14 +79,6 @@
             <artifactId>jedis</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-            <optional>true</optional>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

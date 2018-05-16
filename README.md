@@ -9,7 +9,7 @@ parent：版本封装<br/>
 base:功能封装
 
 #### 引用
->yexuejc.springboot.version=1.0.7
+>yexuejc.springboot.version=1.0.8
 
 pom.xml
 ```
