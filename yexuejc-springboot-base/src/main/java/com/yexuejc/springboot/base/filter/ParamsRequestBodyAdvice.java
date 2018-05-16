@@ -78,7 +78,7 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
                     throw new GatewayException("sign错误");
                 }
                 InputStream body = IOUtils.toInputStream(JsonUtil.obj2Json(StrUtil.parseUrlencoded(data)), "UTF-8");
-                LogUtil.accessLogger.info("解密耗时：{}", System.currentTimeMillis() - t);
+                LogUtil.accessLogger.debug("解密耗时：{}", System.currentTimeMillis() - t);
                 return new MyHttpInputMessage(inputMessage.getHeaders(), body);
             } catch (Exception e) {
                 e.printStackTrace();

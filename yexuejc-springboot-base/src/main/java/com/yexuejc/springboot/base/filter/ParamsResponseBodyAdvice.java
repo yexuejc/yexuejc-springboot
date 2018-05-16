@@ -86,7 +86,7 @@ public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
                         LogUtil.accessLogger.error("出参加密错误，进行明文出参{}。\n异常信息：{}", JsonUtil.obj2Json(resps), e.getMessage());
                     }
                 }
-                LogUtil.accessLogger.info("加密耗时：{}", System.currentTimeMillis() - t);
+                LogUtil.accessLogger.debug("加密耗时：{}", System.currentTimeMillis() - t);
             }
         }
         return body;
