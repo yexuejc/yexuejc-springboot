@@ -1,6 +1,13 @@
 uselaw-base 更新内容
 -------------------
 
+#### version ：1.0.9
+**time：** <br/>
+**branch：** master    <br/>
+**update：**     <br/>
+1. 更新base依赖
+#
+
 #### version ：1.0.8
 **time：** 2018-5-4 09:54:18<br/>
 **branch：** master    <br/>

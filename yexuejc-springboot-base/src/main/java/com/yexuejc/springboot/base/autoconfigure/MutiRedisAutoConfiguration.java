@@ -96,61 +96,61 @@ public class MutiRedisAutoConfiguration {
 
 		@Primary
 		@Bean(BEAN_REDIS_FACTORY0)
-		@ConditionalOnProperty(name = "afound.redis.db0", matchIfMissing = true)
+		@ConditionalOnProperty(name = "yexuejc.redis.db0", matchIfMissing = true)
 		public JedisConnectionFactory redisConnectionFactory0() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 0);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY1)
-		@ConditionalOnProperty(name = "afound.redis.db1")
+		@ConditionalOnProperty(name = "yexuejc.redis.db1")
 		public JedisConnectionFactory redisConnectionFactory1() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 1);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY2)
-		@ConditionalOnProperty(name = "afound.redis.db2")
+		@ConditionalOnProperty(name = "yexuejc.redis.db2")
 		public JedisConnectionFactory redisConnectionFactory2() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 2);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY3)
-		@ConditionalOnProperty(name = "afound.redis.db3")
+		@ConditionalOnProperty(name = "yexuejc.redis.db3")
 		public JedisConnectionFactory redisConnectionFactory3() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 3);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY4)
-		@ConditionalOnProperty(name = "afound.redis.db4")
+		@ConditionalOnProperty(name = "yexuejc.redis.db4")
 		public JedisConnectionFactory redisConnectionFactory4() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 4);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY5)
-		@ConditionalOnProperty(name = "afound.redis.db5")
+		@ConditionalOnProperty(name = "yexuejc.redis.db5")
 		public JedisConnectionFactory redisConnectionFactory5() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 5);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY6)
-		@ConditionalOnProperty(name = "afound.redis.db6")
+		@ConditionalOnProperty(name = "yexuejc.redis.db6")
 		public JedisConnectionFactory redisConnectionFactory6() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 6);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY7)
-		@ConditionalOnProperty(name = "afound.redis.db7")
+		@ConditionalOnProperty(name = "yexuejc.redis.db7")
 		public JedisConnectionFactory redisConnectionFactory7() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 7);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY8)
-		@ConditionalOnProperty(name = "afound.redis.db8")
+		@ConditionalOnProperty(name = "yexuejc.redis.db8")
 		public JedisConnectionFactory redisConnectionFactory8() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 8);
 		}
 
 		@Bean(BEAN_REDIS_FACTORY9)
-		@ConditionalOnProperty(name = "afound.redis.db9")
+		@ConditionalOnProperty(name = "yexuejc.redis.db9")
 		public JedisConnectionFactory redisConnectionFactory9() throws UnknownHostException {
 			return applyProperties(createJedisConnectionFactory(), 9);
 		}
@@ -282,7 +282,7 @@ public class MutiRedisAutoConfiguration {
 
 		@Primary
 		@Bean(BEAN_REDIS_TEMPLATE0)
-		@ConditionalOnProperty(name = "afound.redis.db0", matchIfMissing = true)
+		@ConditionalOnProperty(name = "yexuejc.redis.db0", matchIfMissing = true)
 		public RedisTemplate<Object, Object> redisTemplate(
 				@Qualifier(BEAN_REDIS_FACTORY0) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -290,7 +290,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE0)
-		@ConditionalOnProperty(name = "afound.redis.db0", matchIfMissing = true)
+		@ConditionalOnProperty(name = "yexuejc.redis.db0", matchIfMissing = true)
 		public StringRedisTemplate stringRedisTemplate(
 				@Qualifier(BEAN_REDIS_FACTORY0) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -298,7 +298,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE1)
-		@ConditionalOnProperty(name = "afound.redis.db1")
+		@ConditionalOnProperty(name = "yexuejc.redis.db1")
 		public RedisTemplate<Object, Object> redisTemplate1(
 				@Qualifier(BEAN_REDIS_FACTORY1) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -306,7 +306,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE1)
-		@ConditionalOnProperty(name = "afound.redis.db1")
+		@ConditionalOnProperty(name = "yexuejc.redis.db1")
 		public StringRedisTemplate stringRedisTemplate1(
 				@Qualifier(BEAN_REDIS_FACTORY1) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -314,7 +314,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE2)
-		@ConditionalOnProperty(name = "afound.redis.db2")
+		@ConditionalOnProperty(name = "yexuejc.redis.db2")
 		public RedisTemplate<Object, Object> redisTemplate2(
 				@Qualifier(BEAN_REDIS_FACTORY2) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -322,7 +322,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE2)
-		@ConditionalOnProperty(name = "afound.redis.db2")
+		@ConditionalOnProperty(name = "yexuejc.redis.db2")
 		public StringRedisTemplate stringRedisTemplate2(
 				@Qualifier(BEAN_REDIS_FACTORY2) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -330,7 +330,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE3)
-		@ConditionalOnProperty(name = "afound.redis.db3")
+		@ConditionalOnProperty(name = "yexuejc.redis.db3")
 		public RedisTemplate<Object, Object> redisTemplate3(
 				@Qualifier(BEAN_REDIS_FACTORY3) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -338,7 +338,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE3)
-		@ConditionalOnProperty(name = "afound.redis.db3")
+		@ConditionalOnProperty(name = "yexuejc.redis.db3")
 		public StringRedisTemplate stringRedisTemplate3(
 				@Qualifier(BEAN_REDIS_FACTORY3) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -346,7 +346,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE4)
-		@ConditionalOnProperty(name = "afound.redis.db4")
+		@ConditionalOnProperty(name = "yexuejc.redis.db4")
 		public RedisTemplate<Object, Object> redisTemplate4(
 				@Qualifier(BEAN_REDIS_FACTORY4) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -354,7 +354,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE4)
-		@ConditionalOnProperty(name = "afound.redis.db4")
+		@ConditionalOnProperty(name = "yexuejc.redis.db4")
 		public StringRedisTemplate stringRedisTemplate4(
 				@Qualifier(BEAN_REDIS_FACTORY4) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -362,7 +362,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE5)
-		@ConditionalOnProperty(name = "afound.redis.db5")
+		@ConditionalOnProperty(name = "yexuejc.redis.db5")
 		public RedisTemplate<Object, Object> redisTemplate5(
 				@Qualifier(BEAN_REDIS_FACTORY5) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -370,7 +370,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE5)
-		@ConditionalOnProperty(name = "afound.redis.db5")
+		@ConditionalOnProperty(name = "yexuejc.redis.db5")
 		public StringRedisTemplate stringRedisTemplate5(
 				@Qualifier(BEAN_REDIS_FACTORY5) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -378,7 +378,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE6)
-		@ConditionalOnProperty(name = "afound.redis.db6")
+		@ConditionalOnProperty(name = "yexuejc.redis.db6")
 		public RedisTemplate<Object, Object> redisTemplate6(
 				@Qualifier(BEAN_REDIS_FACTORY6) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -386,7 +386,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE6)
-		@ConditionalOnProperty(name = "afound.redis.db6")
+		@ConditionalOnProperty(name = "yexuejc.redis.db6")
 		public StringRedisTemplate stringRedisTemplate6(
 				@Qualifier(BEAN_REDIS_FACTORY6) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -394,7 +394,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE7)
-		@ConditionalOnProperty(name = "afound.redis.db7")
+		@ConditionalOnProperty(name = "yexuejc.redis.db7")
 		public RedisTemplate<Object, Object> redisTemplate7(
 				@Qualifier(BEAN_REDIS_FACTORY7) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -402,7 +402,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE7)
-		@ConditionalOnProperty(name = "afound.redis.db7")
+		@ConditionalOnProperty(name = "yexuejc.redis.db7")
 		public StringRedisTemplate stringRedisTemplate7(
 				@Qualifier(BEAN_REDIS_FACTORY7) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -410,7 +410,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE8)
-		@ConditionalOnProperty(name = "afound.redis.db8")
+		@ConditionalOnProperty(name = "yexuejc.redis.db8")
 		public RedisTemplate<Object, Object> redisTemplate8(
 				@Qualifier(BEAN_REDIS_FACTORY8) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -418,7 +418,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE8)
-		@ConditionalOnProperty(name = "afound.redis.db8")
+		@ConditionalOnProperty(name = "yexuejc.redis.db8")
 		public StringRedisTemplate stringRedisTemplate8(
 				@Qualifier(BEAN_REDIS_FACTORY8) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -426,7 +426,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_TEMPLATE9)
-		@ConditionalOnProperty(name = "afound.redis.db9")
+		@ConditionalOnProperty(name = "yexuejc.redis.db9")
 		public RedisTemplate<Object, Object> redisTemplate9(
 				@Qualifier(BEAN_REDIS_FACTORY9) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {
@@ -434,7 +434,7 @@ public class MutiRedisAutoConfiguration {
 		}
 
 		@Bean(BEAN_REDIS_STRING_TEMPLATE9)
-		@ConditionalOnProperty(name = "afound.redis.db9")
+		@ConditionalOnProperty(name = "yexuejc.redis.db9")
 		public StringRedisTemplate stringRedisTemplate9(
 				@Qualifier(BEAN_REDIS_FACTORY9) RedisConnectionFactory redisConnectionFactory)
 				throws UnknownHostException {

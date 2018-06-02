@@ -3,8 +3,11 @@ package com.yexuejc.springboot.base.autoconfigure;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.util.DateUtil;
 import com.yexuejc.base.util.StrUtil;
@@ -22,6 +25,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -60,11 +64,24 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
         return converter;
     }
 
+    @Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        builder.serializationInclusion(JsonInclude.Include.NON_NULL);
+        ObjectMapper objectMapper = builder.build();
+        SimpleModule simpleModule = new SimpleModule();
+        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        objectMapper.registerModule(simpleModule);
+        objectMapper.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true);// 忽略 transient 修饰的属性
+        return new MappingJackson2HttpMessageConverter(objectMapper);
+    }
+
     @Override
     public void configureMessageConverters(
             List<HttpMessageConverter<?>> converters) {
         super.configureMessageConverters(converters);
         converters.add(responseBodyConverter());
+        converters.add(mappingJackson2HttpMessageConverter());
     }
 
     @Override
@@ -74,6 +91,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
     }
 
     /******************************************编码部分*****************************************************/
+
 
     /**
      * 添加拦截器

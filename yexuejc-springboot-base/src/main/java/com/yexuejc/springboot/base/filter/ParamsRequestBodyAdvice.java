@@ -16,6 +16,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -77,7 +78,7 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
                     LogUtil.accessLogger.error("sign错误,请求内容：{}", JsonUtil.obj2Json(paramsPO));
                     throw new GatewayException("sign错误");
                 }
-                InputStream body = IOUtils.toInputStream(JsonUtil.obj2Json(StrUtil.parseUrlencoded(data)), "UTF-8");
+                InputStream body = new ByteArrayInputStream(data.getBytes("UTF-8"));
                 LogUtil.accessLogger.debug("解密耗时：{}", System.currentTimeMillis() - t);
                 return new MyHttpInputMessage(inputMessage.getHeaders(), body);
             } catch (Exception e) {

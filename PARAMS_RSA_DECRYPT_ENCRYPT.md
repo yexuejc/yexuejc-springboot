@@ -1,5 +1,6 @@
 # 加密解密功能介绍
 
+####    [公、私钥生成](RSA.md)
 
 #### 客户端解密（服务器端加密出参data）
 
@@ -61,11 +62,11 @@
 
 #### 客户端加密 (服务器端解密入参data)
 
->1.客户端先使用公钥加密,参数为Map类型          <br/>
->然后ASCII码排序得到新的参数->result1=xxxxx&result2=xxxxx，再MD5的到sign         <br/>
->加密新的参数得到data（也可以对原map JSON化后加密）
+>1. 客户端先使用公钥加密,参数为Map类型          <br/>
+>   1.1 参数先ASCII码排序得到新的参数->result1=xxxxx&result2=xxxxx，再MD5的到sign         <br/>
+>   1.2 加密新的参数得到data（也可以对原map JSON化后加密）
 >
->2.API接收到json参数，解析为ParamsPO           <br/>
+>2. API接收到json参数，解析为ParamsPO           <br/>
 >ParamsPO.data部分进行解密操作，解密后得到原始参数(result1=xxxxx&result2=xxxxx)做MD5校验
 
 原始参数

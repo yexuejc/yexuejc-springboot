@@ -73,7 +73,7 @@ public class IndexCtrl {
     }
 
     @RequestMapping(value = {"/3"})
-    public Resps b(@RequestBody PagerVO pagerVO) {
+    public Resps b(@RequestBody TaVO pagerVO) {
         System.out.println("请求参数：" + JsonUtil.obj2Json(pagerVO));
         Map map = new HashMap();
         map.put("page", 5);

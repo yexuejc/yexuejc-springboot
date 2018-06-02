@@ -1,10 +1,11 @@
-package com.yexuejc.springboot.base;
+package com.yexuejc.springboot.base.test;
 
 import com.yexuejc.base.encrypt.RSA;
 import com.yexuejc.base.encrypt.RSA2;
 import com.yexuejc.base.pojo.ParamsPO;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
+import com.yexuejc.springboot.base.ApplicationRun;
 import com.yexuejc.springboot.base.filter.RsaProperties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,12 +138,15 @@ public class ApplicationTest {
         String privatePwd = "lgfishing2018";
         String privateAlias = "lgfishing";
 
-        String dataStr = "{\"ret\":\"0\",\"ExpireTime\":\"2015/10/28 23:59:59\",\"rettxt\":\"OK\",\"Token\":\"69296128A59798E2D423D3B1A9F766F4\"}'";
+        String dataStr = "{\"ret\":\"0\",\"expireTime\":\"2015/10/28 23:59:59\",\"rettxt\":\"OK\",\"token\":\"69296128A59798E2D423D3B1A9F766F4\"}";
+
+
 
 /***************************************************************************************************************************************************************************************************************************************/
         //客户端公钥加密
         String publicEncryptResult = RSA.publicEncrypt(dataStr, RSA2.getPublicKey(publicKey));
         System.out.println(publicEncryptResult);
+        System.out.println(StrUtil.toMD5(dataStr));
 
         //服务器私钥解密
         String privateDecryptResult = RSA.privateDecrypt(publicEncryptResult, RSA2.getPrivateKey(privateKey, privateAlias, privatePwd));
@@ -154,6 +159,43 @@ public class ApplicationTest {
         //客户端公钥解密
         String publicDecryptResult = RSA.publicDecrypt(privateEncryptResult, RSA2.getPublicKey(publicKey));
         System.out.println(publicDecryptResult);
+
+    }
+
+
+    /**
+     * key加解密
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    @Test
+    public void a() throws NoSuchAlgorithmException, InvalidKeySpecException {
+        String privateKey = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAiSo5blJ9-QJ0_QElcy5AaRTq-3oO4lJ8PvIOIt-Xr5SUFODVj3DUbiy6_0bxQYO3NiYHlXPb37UVV3jjlXJsXwIDAQABAkBE0WOJH2hGs93gRl_0vwLf9ffDfkTTdlER_73p70aad3QZRslEkinQH7G5aE_DgBm5m72TCeH-PD2FZ2lwtavBAiEAvnRown5Lpqbl0tN_OUxr_e1u9d_-8dNL_JEETO7BZCECIQC4XtY-18j0bVVLxaXPjKQ00D59yntwObihDNyRK0nAfwIgHPHEGgrnpGQo-Wl7JFIg925mNqfcLxRVsAS6CpcefQECIQCUsLdsmy6QIhTmNRJSXoSXq1KatE_05DhIekzwLs8eFQIgfMawMiu52ZxBI5_pZ7ancQZ6Dsxl45utFqJShzV1pio";
+        String publicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIkqOW5SffkCdP0BJXMuQGkU6vt6DuJSfD7yDiLfl6-UlBTg1Y9w1G4suv9G8UGDtzYmB5Vz29-1FVd445VybF8CAwEAAQ";
+
+        String privatePwd = "lgfishing2018";
+        String privateAlias = "lgfishing";
+
+        String dataStr = "{\"ret\":\"0\",\"ExpireTime\":\"2015/10/28 23:59:59\",\"rettxt\":\"OK\",\"Token\":\"69296128A59798E2D423D3B1A9F766F4\"}'";
+
+/***************************************************************************************************************************************************************************************************************************************/
+        //客户端公钥加密
+        String publicEncryptResult = RSA.publicEncrypt(dataStr, RSA.getPublicKey(publicKey));
+        System.out.println(publicEncryptResult);
+
+        //服务器私钥解密
+        String privateDecryptResult = RSA.privateDecrypt(publicEncryptResult, RSA.getPrivateKey(privateKey));
+        System.out.println(privateDecryptResult);
+/***************************************************************************************************************************************************************************************************************************************/
+        //服务器端私钥加密
+        String privateEncryptResult = RSA.privateEncrypt(dataStr, RSA.getPrivateKey(privateKey));
+        System.out.println(privateEncryptResult);
+
+        //客户端公钥解密
+        String publicDecryptResult = RSA.publicDecrypt(privateEncryptResult, RSA.getPublicKey(publicKey));
+        System.out.println(publicDecryptResult);
+
+        System.out.println(Base64.getEncoder().encodeToString(RSA.getPublicKey(publicKey).getEncoded()));
 
     }
 }
