@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.util.DateUtil;
 import com.yexuejc.base.util.StrUtil;
+import com.yexuejc.springboot.base.exception.GatewayException;
 import com.yexuejc.springboot.base.filter.ValidationFilter;
 import com.yexuejc.springboot.base.filter.ValidationFilterProperties;
 import com.yexuejc.springboot.base.interceptor.LogInterceptor;
@@ -162,8 +163,11 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
         @ResponseBody
         @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
         public Resps<Object> jsonErrorHandler(Throwable e) {
-            LogUtil.exceptionLogger.error(e.getMessage(), e);
-            return Resps.error(StrUtil.setStr(e.getMessage(), ERROR_MSG));
+            LogUtil.exceptionLogger.error("", e);
+            if (e instanceof GatewayException) {
+                return Resps.error(StrUtil.setStr(e.getMessage(), ERROR_MSG));
+            }
+            return Resps.error(ERROR_MSG);
         }
     }
 }

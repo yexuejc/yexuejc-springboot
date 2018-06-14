@@ -1,8 +1,16 @@
 uselaw-base 更新内容
 -------------------
 
+#### version ：1.0.10
+**time：2018年6月14日22:31:18** <br/>
+**branch：** master    <br/>
+**update：**     <br/>
+1. 更新springboot-base:1.1.4依赖
+2. 统一编码：UTF-8
+#
+
 #### version ：1.0.9
-**time：** <br/>
+**time：2018年6月2日12:17:18** <br/>
 **branch：** master    <br/>
 **update：**     <br/>
 1. 更新base依赖

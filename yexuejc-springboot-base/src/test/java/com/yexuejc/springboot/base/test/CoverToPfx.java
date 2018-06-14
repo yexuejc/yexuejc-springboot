@@ -10,9 +10,9 @@ import java.util.Enumeration;
 public class CoverToPfx {
     public static final String PKCS12 = "PKCS12";
     public static final String JKS = "JKS";
-    public static final String PFX_KEYSTORE_FILE = "D:/idea_work/yexuejc/yexuejc-springboot/yexuejc-springboot-base/src/test/resources/lgfishing2.pfx";
+    public static final String PFX_KEYSTORE_FILE = "D:/idea_work/yexuejc/yexuejc-springboot/yexuejc-springboot-base/src/test/resources/lgfishing.pfx";
     public static final String KEYSTORE_PASSWORD = "lgfishing2018";
-    public static final String JKS_KEYSTORE_FILE = "D:/idea_work/yexuejc/yexuejc-springboot/yexuejc-springboot-base/src/test/resources/lgfishing2.keystore";
+    public static final String JKS_KEYSTORE_FILE = "D:/idea_work/yexuejc/yexuejc-springboot/yexuejc-springboot-base/src/test/resources/lgfishing.keystore";
 
     public static void coverTokeyStore() {
         try {
