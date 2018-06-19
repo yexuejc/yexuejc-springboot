@@ -28,6 +28,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -166,8 +167,11 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
             LogUtil.exceptionLogger.error("", e);
             if (e instanceof GatewayException) {
                 return Resps.error(StrUtil.setStr(e.getMessage(), ERROR_MSG));
+            } else if (e instanceof HttpRequestMethodNotSupportedException) {
+                return Resps.error("请求方式错误");
             }
             return Resps.error(ERROR_MSG);
         }
+
     }
 }

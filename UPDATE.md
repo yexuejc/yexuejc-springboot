@@ -1,6 +1,13 @@
 uselaw-base 更新内容
 -------------------
 
+#### version ：1.0.11
+**time：2018-6-19 22:18:03** <br/>
+**branch：** master    <br/>
+**update：**     <br/>
+1. 更新springboot-base:1.1.5依赖
+#
+
 #### version ：1.0.10
 **time：2018年6月14日22:31:18** <br/>
 **branch：** master    <br/>

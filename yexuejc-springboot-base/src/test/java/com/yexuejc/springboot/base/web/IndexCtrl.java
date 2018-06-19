@@ -6,6 +6,7 @@ import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -69,6 +70,12 @@ public class IndexCtrl {
 
     @RequestMapping(value = {"/8"})
     public Resps l() {
+        return Resps.success("请求成功").setSucc(05652.154);
+    }
+
+    @RequestMapping(value = {"/logina"},method = RequestMethod.POST)
+    public Resps l2(@RequestBody UserLoginVo loginVo) {
+        System.out.println("请求参数：" + JsonUtil.obj2Json(loginVo));
         return Resps.success("请求成功").setSucc(05652.154);
     }
 
