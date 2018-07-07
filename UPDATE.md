@@ -1,6 +1,17 @@
-uselaw-base 更新内容
+yexuejc-springboot 更新内容
 -------------------
 
+#### version ：1.0.12
+**time：2018-6-19 22:18:03** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.1.6
+```
+**update：**     <br/>
+1. maven仓库更新
+
+#
 #### version ：1.0.11
 **time：2018-6-19 22:18:03** <br/>
 **branch：** master    <br/>
