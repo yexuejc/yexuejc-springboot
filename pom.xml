@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -20,9 +20,7 @@
     </parent>
 
     <properties>
-        <repos.yexuejc.ivt.url>http://47.100.13.178:7081/nexus/content/groups/public</repos.yexuejc.ivt.url>
-        <repos.yexuejc.prod.url>http://47.100.13.178:7081/nexus/content/groups/public</repos.yexuejc.prod.url>
-        <repos.yexuejc.dist.url>http://47.100.13.178:7081/nexus/content/repositories</repos.yexuejc.dist.url>
+        <repos.yexuejc.url>https://nexus.yexuejc.club/repository/</repos.yexuejc.url>
 
         <repos.aliyun.url>http://maven.aliyun.com/nexus/content/groups/public</repos.aliyun.url>
         <repos.jitpack.url>https://jitpack.io</repos.jitpack.url>
@@ -284,14 +282,9 @@
 
     <repositories>
         <repository>
-            <id>yexuejc-prod-nexus-public</id>
-            <name>yexuejc-prod-nexus-public</name>
-            <url>${repos.yexuejc.prod.url}</url>
-        </repository>
-        <repository>
-            <id>yexuejc-ivt-nexus-public</id>
-            <name>yexuejc-ivt-nexus-public</name>
-            <url>${repos.yexuejc.ivt.url}</url>
+            <id>yexuejc-nexus-public</id>
+            <name>yexuejc-nexus-public</name>
+            <url>${repos.yexuejc.url}maven-public/</url>
         </repository>
         <repository>
             <id>aliyun-nexus-public</id>
@@ -308,12 +301,12 @@
         <repository>
             <id>releases</id>
             <name>nexus-release</name>
-            <url>${repos.yexuejc.dist.url}/releases</url>
+            <url>${repos.yexuejc.url}maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>nexus-snapshots</name>
-            <url>${repos.yexuejc.dist.url}/snapshots</url>
+            <url>${repos.yexuejc.url}maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
