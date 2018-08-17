@@ -1,6 +1,17 @@
 yexuejc-springboot 更新内容
 -------------------
 
+#### version ：1.0.13
+**time：2018-8-17 11:41:18** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.1.7
+```
+**update：**     <br/>
+1. 升级base
+#
+
 #### version ：1.0.12
 **time：2018-6-19 22:18:03** <br/>
 **branch：** master    <br/>
