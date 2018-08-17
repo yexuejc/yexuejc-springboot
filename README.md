@@ -8,37 +8,41 @@
 parent：版本封装<br/>
 base:功能封装
 
-#### 引用
->yexuejc.springboot.version=1.0.12
+#### 最新版本
+>yexuejc.springboot.version=1.0.13 <br>
+>yexuejc.base.version=1.1.7
 
 pom.xml
 ```
 <!--parent 引用-->
 <parent>
-    <groupId>com.github.yexuejc.yexuejc-springboot</groupId>
+    <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>${yexuejc.springboot.version}</version>
+    <version>最新版本</version>
 </parent>
 
 <dependencies>
     <!--base 引用-->
     <dependency>
-        <groupId>com.github.yexuejc.yexuejc-springboot</groupId>
+        <groupId>com.yexuejc.springboot</groupId>
         <artifactId>yexuejc-springboot-base</artifactId>
         <version>${parent.version}</version>
     </dependency>
     <!--推荐使用-->
     <!--https://gitee.com/incloudcode/yexuejc-base.git-->
     <dependency>
-        <groupId>com.github.yexuejc</groupId>
-        <artifactId>yexuejc-base</artifactId>
-        <version>${yexuejc.base.version}</version>
+        <dependency>
+            <groupId>com.yexuejc.base</groupId>
+            <artifactId>yexuejc-base</artifactId>
+            <version>${yexuejc.base.version}</version>
+        </dependency>
     </dependency>
 </dependencies>
 <repositories>
     <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+        <id>yexuejc-nexus-public</id>
+        <name>yexuejc-nexus-public</name>
+        <url>https://nexus.yexuejc.club/repository/maven-public/</url>
     </repository>
 </repositories>
 ```
