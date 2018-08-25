@@ -11,6 +11,7 @@ spring-boot-starter-parent:1.5.15.RELEASE
 ```
 **update：**     <br/>
 1. 升级依赖
+2. 优化拦截规则：增加通配符 /**
 #
 
 #### version ：1.0.13

@@ -12,6 +12,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 过滤器配置
@@ -62,12 +63,28 @@ public class ValidationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String sp = request.getServletPath();
         if (properties.getType() == 0) {
-            if (properties.getIgnored().contains(sp)) {
+            AtomicBoolean b = new AtomicBoolean(false);
+            properties.getIgnored().forEach(it -> {
+                if (it.endsWith("/**") && sp.indexOf(it.substring(0, it.length() - 3)) > -1) {
+                    b.set(true);
+                    return;
+                }
+            });
+            if (b.get() || properties.getIgnored().contains(sp)) {
+                //不拦截
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
         } else {
-            if (!properties.getIntercepts().contains(sp)) {
+            AtomicBoolean b = new AtomicBoolean(true);
+            properties.getIntercepts().forEach(it -> {
+                if (it.endsWith("/**") && sp.indexOf(it.substring(0, it.length() - 3)) > -1) {
+                    b.set(false);
+                    return;
+                }
+            });
+            if (b.get() || !properties.getIntercepts().contains(sp)) {
+                //不拦截
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
