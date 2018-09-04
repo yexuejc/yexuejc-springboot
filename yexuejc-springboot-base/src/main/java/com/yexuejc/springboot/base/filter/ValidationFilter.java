@@ -7,6 +7,7 @@ import com.yexuejc.springboot.base.util.LogUtil;
 import com.yexuejc.springboot.base.util.NetUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +62,11 @@ public class ValidationFilter implements Filter {
         }
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {
+            //不拦截 OPTIONS 请求
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         String sp = request.getServletPath();
         if (properties.getType() == 0) {
             AtomicBoolean b = new AtomicBoolean(false);
