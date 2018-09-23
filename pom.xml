@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -20,7 +20,7 @@
     </parent>
 
     <properties>
-        <yexuejc.base.version>1.1.8</yexuejc.base.version>
+        <yexuejc.base.version>1.1.9</yexuejc.base.version>
         <repos.yexuejc.url>https://nexus.yexuejc.club/repository/</repos.yexuejc.url>
 
         <repos.aliyun.url>http://maven.aliyun.com/nexus/content/groups/public</repos.aliyun.url>

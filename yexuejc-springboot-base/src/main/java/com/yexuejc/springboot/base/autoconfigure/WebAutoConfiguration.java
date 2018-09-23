@@ -16,6 +16,7 @@ import com.yexuejc.springboot.base.filter.ValidationFilter;
 import com.yexuejc.springboot.base.filter.ValidationFilterProperties;
 import com.yexuejc.springboot.base.interceptor.LogInterceptor;
 import com.yexuejc.springboot.base.util.LogUtil;
+import com.yexuejc.springboot.base.util.SSLUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -145,6 +146,15 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
         registration.setName("validationFilter");
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 20);
         return registration;
+    }
+
+    @Bean
+    /**
+     * 是否开启HTTPS（SSL）请求证书验证忽略：默认false
+     */
+    @ConditionalOnProperty(name = "yexuejc.enable.ssl-ignore", matchIfMissing = false)
+    public SSLUtil getSslUtil() {
+        return new SSLUtil();
     }
 
     /**

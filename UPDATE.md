@@ -1,6 +1,19 @@
 yexuejc-springboot 更新内容
 -------------------
 
+#### version ：1.0.16
+**time：2018-9-23 12:46:26** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.1.9
+spring-boot-starter-parent:1.5.15.RELEASE
+```
+**update：**     <br/>
+1. 升级依赖
+2. 增加SSL证书忽略：默认关闭
+#
+
 #### version ：1.0.15
 **time：2018-9-3 19:29:39** <br/>
 **branch：** master    <br/>
