@@ -1,8 +1,8 @@
 # yexuejc-springboot
 
 ### 说明
->本分支基于 springboot 1.x 
->2.x 分支基于springboot 2.x
+>基于springboot版本分别维护1.x 2.x 分支 <br>
+>master将继续同步1.x分支（后期获取会同步于2.x）
 
 
 #### 项目介绍
