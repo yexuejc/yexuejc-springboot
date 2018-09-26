@@ -1,4 +1,8 @@
-# yexuejc-springboot-base
+# yexuejc-springboot
+
+### 说明
+>本分支基于 springboot 1.x 
+>2.x 分支基于springboot 2.x
 
 
 #### 项目介绍
@@ -9,7 +13,7 @@ parent：版本封装<br/>
 base:功能封装
 
 #### 最新版本
->yexuejc.springboot.version=1.1.0 <br>
+>yexuejc.springboot.version=1.1.1 <br>
 >yexuejc.base.version=1.1.9
 
 pom.xml
