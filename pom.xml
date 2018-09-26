@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -15,7 +15,7 @@
         <!-- spring boot父级,包含了统一版本管理,统一插件管理等 -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.15.RELEASE</version>
+        <version>2.0.5.RELEASE</version>
         <!--  <relativePath/> lookup parent from repository -->
     </parent>
 
@@ -59,9 +59,9 @@
         <dependencies>
             <!--基础包-->
             <!--<dependency>-->
-                <!--<groupId>com.github.yexuejc</groupId>-->
-                <!--<artifactId>yexuejc-base</artifactId>-->
-                <!--<version>${yexuejc.base.version}</version>-->
+            <!--<groupId>com.github.yexuejc</groupId>-->
+            <!--<artifactId>yexuejc-base</artifactId>-->
+            <!--<version>${yexuejc.base.version}</version>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>com.yexuejc.base</groupId>
@@ -176,37 +176,6 @@
                 <classifier>jar-with-dependencies</classifier>
             </dependency>
 
-            <!-- spring-boot-admin相关 -->
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>${spring-boot-admin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-server</artifactId>
-                <version>${spring-boot-admin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-server-ui</artifactId>
-                <version>${spring-boot-admin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
-                <version>${spring-boot-admin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-server-ui-turbine</artifactId>
-                <version>${spring-boot-admin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-server-ui-activiti</artifactId>
-                <version>${spring-boot-admin.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -271,7 +240,9 @@
                                 <goal>single</goal>
                             </goals>
                             <configuration>
-                                <descriptor>${basedir}/assembly/assembly.xml</descriptor>
+                                <descriptors>
+                                    <descriptor>${basedir}/assembly/assembly.xml</descriptor>
+                                </descriptors>
                             </configuration>
                         </execution>
                     </executions>
