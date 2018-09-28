@@ -53,6 +53,11 @@
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
         <thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
+
+        <reflectasm.version>1.09</reflectasm.version>
+        <!--dubbo-->
+        <dubbo-spring-boot-starter.version>0.2.0</dubbo-spring-boot-starter.version>
+        <mybatis-plus.version>3.0.3</mybatis-plus.version>
     </properties>
     <!-- 声明包版本 继承项目自引入 -->
     <dependencyManagement>
@@ -176,6 +181,24 @@
                 <classifier>jar-with-dependencies</classifier>
             </dependency>
 
+            <!-- copy对象 -->
+            <dependency>
+                <groupId>com.esotericsoftware.reflectasm</groupId>
+                <artifactId>reflectasm</artifactId>
+                <version>${reflectasm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-spring-boot-starter.version}</version>
+            </dependency>
+            <!-- springboot mybatis-plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
