@@ -25,7 +25,6 @@
         <dependency>
             <groupId>com.yexuejc.base</groupId>
             <artifactId>yexuejc-base</artifactId>
-            <optional>true</optional>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>com.github.yexuejc</groupId>-->
