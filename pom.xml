@@ -57,6 +57,7 @@
         <reflectasm.version>1.09</reflectasm.version>
         <!--dubbo-->
         <dubbo-spring-boot-starter.version>0.2.0</dubbo-spring-boot-starter.version>
+        <mybatis-plus.version>3.0.3</mybatis-plus.version>
     </properties>
     <!-- 声明包版本 继承项目自引入 -->
     <dependencyManagement>
@@ -189,6 +190,12 @@
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo-spring-boot-starter.version}</version>
+            </dependency>
+            <!-- springboot mybatis-plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
