@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -53,6 +53,10 @@
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
         <thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
+
+        <reflectasm.version>1.09</reflectasm.version>
+        <!--dubbo-->
+        <dubbo-spring-boot-starter.version>0.2.0</dubbo-spring-boot-starter.version>
     </properties>
     <!-- 声明包版本 继承项目自引入 -->
     <dependencyManagement>
@@ -175,7 +179,17 @@
                 <version>${aliyun-sdk-mns.version}</version>
                 <classifier>jar-with-dependencies</classifier>
             </dependency>
-
+            <!-- copy对象 -->
+            <dependency>
+                <groupId>com.esotericsoftware.reflectasm</groupId>
+                <artifactId>reflectasm</artifactId>
+                <version>${reflectasm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-spring-boot-starter.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
