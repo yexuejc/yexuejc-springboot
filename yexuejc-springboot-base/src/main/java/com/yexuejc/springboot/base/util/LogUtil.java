@@ -35,4 +35,5 @@ public class LogUtil {
         }
         return msg.replaceAll(";", "_");
     }
+
 }
