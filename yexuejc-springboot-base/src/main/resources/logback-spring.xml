@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!--参考 https://blog.csdn.net/Inke88/article/details/75007649-->
     <!--
     springboot 对应配置
         logging.level.root=info
