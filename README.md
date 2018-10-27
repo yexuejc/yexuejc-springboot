@@ -1,7 +1,7 @@
 # yexuejc-springboot
 
 ### 说明
->基于springboot版本分别维护1.x 2.x 分支 <br>
+>基于springboot版本分别维护1.x(对应springboot1.5.16.RELEASE) 2.x(对应springboot2.0.5.RELEASE) 分支 <br>
 >master将继续同步1.x分支（后期获取会同步于2.x）
 
 
@@ -13,8 +13,9 @@ parent：版本封装<br/>
 base:功能封装
 
 #### 最新版本
->yexuejc.springboot.version=1.1.1 <br>
->yexuejc.base.version=1.1.9
+* 1.x yexuejc.springboot.version=1.1.3 <br>
+* 2.x yexuejc.springboot.version=2.0.2 <br>
+* yexuejc.base.version=1.2.0
 
 pom.xml
 ```
