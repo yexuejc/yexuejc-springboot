@@ -1,6 +1,34 @@
 yexuejc-springboot 更新内容
 -------------------
 
+#### version ：2.0.2
+**time：2018-10-27 16:42:08** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.2.0
+spring-boot-starter-parent:2.0.5.RELEASE
+```
+**update：**     <br/>
+1. 日志优化，按天切割日志<br>
+内置 <br>
+LogUtil.accessLogger.info(xxxx);请求访问控制，级别info[LogInterceptor->line39](com.yexuejc.springboot.base.interceptor.LogInterceptor)<br>
+LogUtil.bizLogger.info(xxxx); 业务日志，级别trace<br>
+LogUtil.exceptionLogger.error(xxxx);异常日志，级别error<br>
+```$xslt
+日志配置置于application.properties
+详情参考 logback-spring.xml
+
+#日志contextName
+spring.application.name=@pom.artifactId@
+#日志级别
+logging.level.root=info
+#日志输出目录
+logging.path=/logs/yexuejc-springboot-parent
+
+```
+#
+
 #### version ：2.0.1
 **time：2018-9-28 15:25:30** <br/>
 **branch：** 2.x    <br/>
