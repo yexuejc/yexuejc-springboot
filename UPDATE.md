@@ -6,7 +6,7 @@ yexuejc-springboot 更新内容
 **branch：** master    <br/>
 **关联工程：**    <br/>
 ```
-springboot-base:1.1.9
+springboot-base:1.2.0
 spring-boot-starter-parent:1.5.16.RELEASE
 ```
 **update：**     <br/>
