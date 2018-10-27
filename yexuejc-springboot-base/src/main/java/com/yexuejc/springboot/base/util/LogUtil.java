@@ -13,15 +13,15 @@ public class LogUtil {
     /**
      * 用于记录访问日志，输出到access.log
      */
-    public final static Logger accessLogger = LoggerFactory.getLogger("com.yexuejc.uselaw.access");
+    public final static Logger accessLogger = LoggerFactory.getLogger("access");
     /**
      * 用于记录业务日志，输出到biz.log
      */
-    public final static Logger bizLogger = LoggerFactory.getLogger("com.yexuejc.uselaw.biz");
+    public final static Logger bizLogger = LoggerFactory.getLogger("biz");
     /**
      * 用于记录程序异常日志，输出到exception.log
      */
-    public final static Logger exceptionLogger = LoggerFactory.getLogger("com.yexuejc.uselaw.exception");
+    public final static Logger exceptionLogger = LoggerFactory.getLogger("exception");
 
     /**
      * 格式化日志消息（将;替换为_)
