@@ -13,8 +13,9 @@ parent：版本封装<br/>
 base:功能封装
 
 #### 最新版本
->yexuejc.springboot.version=1.1.1 <br>
->yexuejc.base.version=1.1.9
+* 1.x yexuejc.springboot.version=1.1.3 <br>
+* 2.x yexuejc.springboot.version=2.0.2 <br>
+* yexuejc.base.version=1.2.0
 
 pom.xml
 ```
@@ -105,5 +106,4 @@ pom.xml
 
 [更新记录](UPDATE.md)
 <br/>
-[1.0.6新增 针对API请求安全解决方案](PARAMS_RSA_DECRYPT_ENCRYPT.md)<br/>
-[1.0.6新增 加密功能](PARAMS_RSA_DECRYPT_ENCRYPT.md)
+[相关功能使用指南](doc/MENU.md)

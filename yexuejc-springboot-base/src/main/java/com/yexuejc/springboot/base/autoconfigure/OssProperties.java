@@ -2,17 +2,34 @@ package com.yexuejc.springboot.base.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "yexuejc.oss")
+/**
+ * 阿里OSS相关配置
+ *
+ * @author maxf
+ * @version 1.0
+ * @ClassName OssProperties
+ * @Description
+ * @date 2018/11/1 10:30
+ */
+@ConfigurationProperties(prefix = "yexuejc.alibaba.oss")
 public class OssProperties {
 
-    /** Endpoint 默认内网，外网需要自行配置：http://oss-cn-hangzhou.aliyuncs.com */
-    private String endpoint = "oss-cn-hangzhou-internal.aliyuncs.com";
-    /** 产品域名(固定) */
-    private String accessKeyID = "LTAInCYwtsprAu8g";
-    /** 区域ID(固定) */
-    private String accessKeySecret = "6aqMtyFuJPUPChYpZSLsQ11cg4qby7";
-    /** 默认bucket */
-    private String bucket = "ecentm-res";
+    /**
+     * Endpoint 默认内网，外网需要自行配置：http://oss-cn-hangzhou.aliyuncs.com
+     */
+    private String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
+    /**
+     * 产品域名(固定)
+     */
+    private String accessKeyId = "xxxxx";
+    /**
+     * 区域ID(固定)
+     */
+    private String accessKeySecret = "xxxxx";
+    /**
+     * 默认bucket
+     */
+    private String bucket = "xxxxx";
 
     public String getEndpoint() {
         return endpoint;
@@ -22,12 +39,12 @@ public class OssProperties {
         this.endpoint = endpoint;
     }
 
-    public String getAccessKeyID() {
-        return accessKeyID;
+    public String getAccessKeyId() {
+        return accessKeyId;
     }
 
-    public void setAccessKeyID(String accessKeyID) {
-        this.accessKeyID = accessKeyID;
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
     }
 
     public String getAccessKeySecret() {
