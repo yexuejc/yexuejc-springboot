@@ -20,7 +20,7 @@ aliyun MNS 消息队列 使用指南
      </dependency>
  </dependencies>
 ```
-> 配置
+> 配置 application.properties
 ```
 #mns
 yexuejc.alibaba.mns.access-key-id=阿里MNS提供的AccessKey

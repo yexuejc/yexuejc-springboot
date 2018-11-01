@@ -22,7 +22,7 @@ _本工程暂提供上传功能_
  </dependencies>
 ```
 > 配置
-```
+``` application.properties
 #OSS
 yexuejc.alibaba.oss.endpoint=阿里OSS提供的endpoint
 yexuejc.alibaba.oss.access-key-secret=阿里OSS提供的SecretKey

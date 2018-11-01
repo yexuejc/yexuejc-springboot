@@ -17,8 +17,8 @@ redis 使用指南
     </dependency>
  </dependencies>
 ```
-> 配置
-```
+> 配置 application.properties
+``` 
 #reids
 spring.redis.host=你的reids地址
 spring.redis.password=密码
