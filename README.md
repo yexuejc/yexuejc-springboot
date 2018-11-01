@@ -106,5 +106,4 @@ pom.xml
 
 [更新记录](UPDATE.md)
 <br/>
-[1.0.6新增 针对API请求安全解决方案](PARAMS_RSA_DECRYPT_ENCRYPT.md)<br/>
-[1.0.6新增 加密功能](PARAMS_RSA_DECRYPT_ENCRYPT.md)
+[相关功能使用指南](doc/MENU.md)

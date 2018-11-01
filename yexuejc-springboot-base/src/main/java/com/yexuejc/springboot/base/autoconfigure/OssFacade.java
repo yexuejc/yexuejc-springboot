@@ -9,6 +9,12 @@ import java.io.InputStream;
 
 /**
  * 阿里云OSS服务MNS操作类
+ *
+ * @author maxf
+ * @version 1.0
+ * @ClassName OssFacade
+ * @Description
+ * @date 2018/11/1 10:30
  */
 public class OssFacade {
 
