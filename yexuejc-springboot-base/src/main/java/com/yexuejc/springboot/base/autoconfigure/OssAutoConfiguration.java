@@ -9,10 +9,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * OSS相关配置
+ * 阿里OSS相关配置
+ *
+ * @author maxf
+ * @version 1.0
+ * @ClassName OssAutoConfiguration
+ * @Description
+ * @date 2018/11/1 10:30
  */
 @Configuration
-@ConditionalOnClass({ OSSClient.class })
+@ConditionalOnClass({OSSClient.class})
 @EnableConfigurationProperties(OssProperties.class)
 public class OssAutoConfiguration {
 

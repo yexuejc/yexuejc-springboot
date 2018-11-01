@@ -38,11 +38,11 @@
         <fastjson.version>1.2.49</fastjson.version>
         <commons-codec.version>1.11</commons-codec.version>
         <!-- 阿里云相关 -->
-        <aliyun-java-sdk-core.version>4.0.8</aliyun-java-sdk-core.version>
+        <aliyun-java-sdk-core.version>4.1.1</aliyun-java-sdk-core.version>
         <aliyun-java-sdk-sts.version>3.0.0</aliyun-java-sdk-sts.version>
         <aliyun-sdk-oss.version>3.1.0</aliyun-sdk-oss.version>
         <aliyun-java-sdk-dysmsapi.version>1.1.0</aliyun-java-sdk-dysmsapi.version>
-        <aliyun-sdk-mns.version>1.1.8.6</aliyun-sdk-mns.version>
+        <aliyun-sdk-mns.version>1.1.8</aliyun-sdk-mns.version>
         <!-- 支付宝相关 -->
         <alipay-sdk-java.version>3.3.49.ALL</alipay-sdk-java.version>
         <!-- 微信相关 -->
@@ -180,14 +180,12 @@
                 <version>${aliyun-sdk-mns.version}</version>
                 <classifier>jar-with-dependencies</classifier>
             </dependency>
-
             <!-- copy对象 -->
             <dependency>
                 <groupId>com.esotericsoftware.reflectasm</groupId>
                 <artifactId>reflectasm</artifactId>
                 <version>${reflectasm.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
