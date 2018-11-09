@@ -13,8 +13,8 @@ parent：版本封装<br/>
 base:功能封装
 
 #### 最新版本
-* 1.x yexuejc.springboot.version=1.1.3 <br>
-* yexuejc.base.version=1.2.0
+* 1.x yexuejc.springboot.version=1.1.4 <br>
+* yexuejc.base.version=1.2.1
 
 pom.xml
 ```
