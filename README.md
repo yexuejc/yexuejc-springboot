@@ -1,8 +1,8 @@
 # yexuejc-springboot
 
 ### 说明
->本分支基于 springboot 1.x <br/>
->2.x 分支基于springboot 2.x
+>基于springboot版本分别维护1.x(对应springboot1.5.16.RELEASE) 2.x(对应springboot2.0.5.RELEASE) 分支 <br>
+>master将继续同步1.x分支（后期获取会同步于2.x）
 
 
 #### 项目介绍
@@ -14,6 +14,7 @@ base:功能封装
 
 #### 最新版本
 * 1.x yexuejc.springboot.version=1.1.4 <br>
+* 2.x yexuejc.springboot.version=2.0.3 <br>
 * yexuejc.base.version=1.2.1
 
 pom.xml
@@ -77,6 +78,10 @@ pom.xml
     <tr>
         <td>com.yexuejc.springboot.base.interceptor.*</td>
         <td>拦截器</td>
+    </tr> 
+      <tr>
+        <td>com.yexuejc.springboot.base.security.*</td>
+        <td>多方登录集成</td>
     </tr>
     <tr>
         <td>com.yexuejc.springboot.base.http.*</td>
