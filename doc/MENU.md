@@ -9,5 +9,7 @@
 
 ### 内部集成
 #
+* [2.0.3新增 集成security登录](SECURITY.md)
+
 * [1.0.6新增 针对API请求安全解决方案](PARAMS_RSA_DECRYPT_ENCRYPT.md)<br/>
 * [1.0.6新增 加密功能](PARAMS_RSA_DECRYPT_ENCRYPT.md)
