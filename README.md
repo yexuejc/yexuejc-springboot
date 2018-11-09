@@ -36,11 +36,9 @@ pom.xml
     <!--推荐使用-->
     <!--https://gitee.com/incloudcode/yexuejc-base.git-->
     <dependency>
-        <dependency>
-            <groupId>com.yexuejc.base</groupId>
-            <artifactId>yexuejc-base</artifactId>
-            <version>${yexuejc.base.version}</version>
-        </dependency>
+        <groupId>com.yexuejc.base</groupId>
+        <artifactId>yexuejc-base</artifactId>
+        <version>${yexuejc.base.version}</version>
     </dependency>
 </dependencies>
 <repositories>
