@@ -1,6 +1,20 @@
 yexuejc-springboot 更新内容
 -------------------
 
+#### version ：2.0.3
+**time：2018-11-9 16:58:06** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.2.1
+spring-boot-starter-parent:2.0.5.RELEASE
+```
+**update：**     <br/>
+1. 集成springboot security 多方登录
+2. 文档拆分
+
+
+#
 #### version ：2.0.2
 **time：2018-10-27 16:42:08** <br/>
 **branch：** master    <br/>
