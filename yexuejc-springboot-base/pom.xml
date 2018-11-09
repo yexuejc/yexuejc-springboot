@@ -92,6 +92,30 @@
             <optional>true</optional>
             <scope>test</scope>
         </dependency>
+
+
+        <!-- HikariCP数据库连接池（JDK1.8） -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+        <!-- springboot mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+        <!-- 内存数据库h2-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

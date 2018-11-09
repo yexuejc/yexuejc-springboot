@@ -69,4 +69,25 @@ public class BizConsts {
      */
     public static String BASE_NOT_LOGIN_CODE = BASE_CODE + "010";
     public static String BASE_NOT_LOGIN_MSG = "您尚未登陆";
+
+
+
+
+    /**
+     * 用户登录发送短信验证码
+     */
+    public static String CONSUMER_LOGIN_SMS = "consumer.login.sendSms";
+    /**
+     * 用户绑定手机号
+     */
+    public static String CONSUMER_BIND_MOBILE = "consumer.bind.mobile.sms";
+    /**
+     * 用户登录信息
+     */
+    public static String CONSUMER_LOGIN_REDIS = "consumer.login.redis.session";
+
+    /**
+     * 后台管理员登录信息
+     */
+    public static String ADMIN_LOGIN_REDIS = "admin.login.redis.session";
 }

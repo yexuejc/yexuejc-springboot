@@ -68,7 +68,7 @@ public class OssFacade {
     }
 
     private OSSClient ossClient() {
-        return new OSSClient(properties.getEndpoint(), properties.getAccessKeyID(), properties.getAccessKeySecret(),
+        return new OSSClient(properties.getEndpoint(), properties.getAccessKeyId(), properties.getAccessKeySecret(),
                 configuration);
     }
 }

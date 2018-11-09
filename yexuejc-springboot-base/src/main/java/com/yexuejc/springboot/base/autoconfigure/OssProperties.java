@@ -63,4 +63,5 @@ public class OssProperties {
         this.bucket = bucket;
     }
 
+
 }
