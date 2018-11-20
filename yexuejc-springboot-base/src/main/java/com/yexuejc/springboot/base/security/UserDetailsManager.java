@@ -1,6 +1,7 @@
 package com.yexuejc.springboot.base.security;
 
 import com.yexuejc.base.util.StrUtil;
+import com.yexuejc.springboot.base.exception.UserNotAuthoriayException;
 import com.yexuejc.springboot.base.security.inte.User;
 import com.yexuejc.springboot.base.security.inte.UserService;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,6 +37,9 @@ public class UserDetailsManager extends InMemoryUserDetailsManager {
         }
         // 处理用户权限
         List<GrantedAuthority> authorities = new ArrayList<>();
+        if (StrUtil.isEmpty(consumer.getRoles())) {
+            throw new UserNotAuthoriayException("用户" + username + "缺少权限");
+        }
         for (String role : consumer.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role));
         }

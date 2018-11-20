@@ -183,7 +183,7 @@ yexuejc.http.encrypt.private-pwd=密码
 **time：** 2018-5-4 09:54:18<br/>
 **branch：** master    <br/>
 **update：**     <br/>
-> [使用加密解密](PARAMS_RSA_DECRYPT_ENCRYPT.md)
+> [使用加密解密](doc/PARAMS_RSA_DECRYPT_ENCRYPT.md)
 >
 >1.增加json入参解密、出参加密
 #

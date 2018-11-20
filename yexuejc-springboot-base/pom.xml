@@ -62,13 +62,6 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- 阿里云消息服务MNS相关SDK -->
-        <dependency>
-            <groupId>com.aliyun.mns</groupId>
-            <artifactId>aliyun-sdk-mns</artifactId>
-            <classifier>jar-with-dependencies</classifier>
-            <optional>true</optional>
-        </dependency>
         <!-- JJWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -105,9 +98,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <optional>true</optional>
-            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

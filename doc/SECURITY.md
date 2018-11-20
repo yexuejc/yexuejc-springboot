@@ -1,5 +1,6 @@
 Security框架封装集成登录 使用指南
 -------------
+单独使用例子工程：[https://github.com/yexuejc/springboot-security-login-simple](https://github.com/yexuejc/springboot-security-login-simple)
 * 本项目依赖不向下传递
 
 > **引入依赖 pom.xml**

@@ -52,6 +52,9 @@ public class UserServiceImpl implements UserService {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("mobile", username);
         Consumer consumer = consumerMapper.selectOne(queryWrapper);
+        ArrayList roles =   new ArrayList<>();
+        roles.add("ROLE_CONSUMER");
+        consumer.setRoles(roles);
         return consumer;
     }
 

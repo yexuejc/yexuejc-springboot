@@ -85,23 +85,8 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
             throw new AuthenticationServiceException(
                     "Authentication method not supported: " + request.getMethod());
         }
-        String logtype = obtainLogtype(request);
-        System.out.println("登录方式：" + logtype);
-        String username = "";
-        String password = "";
-        if (logtype == null) {
-            logtype = "";
-        }
-        String openid = "";
-        String smscode = "";
-        /**第三方登录：微信 用户头像*/
-        String head = "";
-        String nickname = "";
-        String sex = "";
-        //根据不同登录方式做不同处理
-        getParams(request, logtype, username, password, smscode, openid, sex, head, nickname);
-        UsernamePasswordAuthenticationToken authRequest = new ConsumerToken(
-                logtype, smscode, openid, username, password, head, nickname, sex);
+
+        UsernamePasswordAuthenticationToken authRequest = getParams(request);
 
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);
@@ -120,18 +105,23 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
     /**
      * 根据登录方式获取请求参数
      *
-     * @param request  登录请求
-     * @param logtype  登录类型
-     * @param username 账号
-     * @param password 密码
-     * @param smscode  短信验证码
-     * @param openid   第三封授权id
-     * @param sex      附加：性别
-     * @param head     附加：头像（源头像路径）
-     * @param nickname 附加：昵称
+     * @param request 登录请求
      */
-    protected void getParams(HttpServletRequest request, String logtype, String username, String password,
-                             String smscode, String openid, String sex, String head, String nickname) {
+    protected UsernamePasswordAuthenticationToken getParams(HttpServletRequest request) {
+        String logtype = obtainLogtype(request);
+        System.out.println("登录方式：" + logtype);
+        String username = "";
+        String password = "";
+        if (logtype == null) {
+            logtype = "";
+        }
+        String openid = "";
+        String smscode = "";
+        /**第三方登录：微信 用户头像*/
+        String head = "";
+        String nickname = "";
+        String sex = "";
+        //根据不同登录方式做不同处理
         switch (logtype) {
             case LogTypeConsts.SMS:
                 //短信登录
@@ -165,6 +155,8 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
                 password = obtainPassword(request);
                 break;
         }
+        return new ConsumerToken(
+                logtype, smscode, openid, username, password, head, nickname, sex);
     }
 
     /**
