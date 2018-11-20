@@ -9,6 +9,7 @@ import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration;
 import com.yexuejc.springboot.base.constant.BizConsts;
 import com.yexuejc.springboot.base.exception.ThirdPartyAuthorizationException;
+import com.yexuejc.springboot.base.exception.UserNotAuthoriayException;
 import com.yexuejc.springboot.base.security.inte.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -123,6 +124,8 @@ public class MySecurityConfig extends SecurityConfig {
                 resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_PWD_IS_ERR_MSG});
             } else if (exception instanceof UsernameNotFoundException) {
                 resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_ACCOUNT_NOT_FOUND_MSG});
+            } else if (exception instanceof UserNotAuthoriayException) {
+                resps.setErr(RespsConsts.CODE_FAIL, new String[]{exception.getMessage()});
             } else {
                 resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_SYS_ERR_MSG});
             }
