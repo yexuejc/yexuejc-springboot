@@ -82,11 +82,20 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ConsumerAuthenticationProcessingFilter consumerAuthenticationProcessingFilter(
             AuthenticationManager authenticationManager) throws Exception {
-        ConsumerAuthenticationProcessingFilter filter = new ConsumerAuthenticationProcessingFilter
-                (authenticationManager);
+        ConsumerAuthenticationProcessingFilter filter = createConsumerAuthenticationProcessingFilter(authenticationManager);
         filter.setAuthenticationManager(this.authenticationManager());
         loginHodler(filter);
         return filter;
+    }
+
+    /**
+     * 初始化 ConsumerAuthenticationProcessingFilter
+     *
+     * @param authenticationManager
+     * @return
+     */
+    protected ConsumerAuthenticationProcessingFilter createConsumerAuthenticationProcessingFilter(AuthenticationManager authenticationManager) {
+        return new ConsumerAuthenticationProcessingFilter(authenticationManager);
     }
 
     /**
@@ -103,8 +112,7 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
-        LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint = new LoginUrlAuthenticationEntryPoint
-                ("/login");
+        LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint = new LoginUrlAuthenticationEntryPoint("/login");
         return loginUrlAuthenticationEntryPoint;
     }
 

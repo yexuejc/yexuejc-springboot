@@ -4,6 +4,7 @@ import com.yexuejc.base.pojo.ApiVO;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.constant.BizConsts;
 import com.yexuejc.springboot.base.constant.LogTypeConsts;
+import com.yexuejc.springboot.base.exception.ClassConvertExeption;
 import com.yexuejc.springboot.base.exception.ThirdPartyAuthorizationException;
 import com.yexuejc.springboot.base.security.inte.User;
 import com.yexuejc.springboot.base.security.inte.UserService;
@@ -177,38 +178,7 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
                 throw notFound;
             } else {
                 try {
-                    //其他方式登录:查询账号 没有->创建账号
-                    //第三方登录
-                    if (consumerToken != null && StrUtil.isNotEmpty(consumerToken.getOpenid())) {
-                        ApiVO apiVO = accountView.checkOpenId(consumerToken);
-                        if (apiVO.isSucc()) {
-                            //已有账号
-                            User consumer = apiVO.getObject1(User.class);
-                            // 处理用户权限
-                            List<GrantedAuthority> authorities = new ArrayList<>();
-                            for (String role : consumer.getRoles()) {
-                                authorities.add(new SimpleGrantedAuthority(role));
-                            }
-                            loadedUser = new ConsumerUser(
-                                    StrUtil.isEmpty(consumer.getMobile()) ? consumerToken.getOpenid() : consumer.getMobile(),
-                                    consumer.getPwd(), consumer.getEnable(), consumer.getNonExpire(),
-                                    true, consumer.getNonLock(), authorities, consumer.getConsumerId(),
-                                    logtype, System.currentTimeMillis());
-                            return loadedUser;
-                        }
-                    }
-                    //第三方登录+短信登录
-                    if (consumerToken != null) {
-                        //没有->创建账号
-                        consumerToken.isReg = true;
-                        ApiVO apiVO = accountView.addConsumer(consumerToken);
-                        if (apiVO.isSucc()) {
-                            loadedUser = display(consumerToken, apiVO.getObject1(User.class));
-                            return loadedUser;
-                        } else {
-                            throw new ThirdPartyAuthorizationException(apiVO.getMsg());
-                        }
-                    }
+                    third(consumerToken, loadedUser, logtype);
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (e instanceof ThirdPartyAuthorizationException) {
@@ -225,6 +195,69 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (loadedUser == null) {
             throw new InternalAuthenticationServiceException(
                     "UserDetailsService returned null, which is an interface contract violation");
+        }
+        return loadedUser;
+    }
+
+    /**
+     * 第三方登录处理=>登录用户为空，此方法处理返回登录用户
+     *
+     * @param consumerToken 登录信息
+     * @param loadedUser    登录用户（为空时进入此方法）
+     * @param logtype       登录方式
+     * @return 登录用户
+     */
+    protected UserDetails third(ConsumerToken consumerToken, UserDetails loadedUser, String logtype) {
+        //其他方式登录:查询账号 没有->创建账号
+        //第三方登录
+        if (consumerToken != null && StrUtil.isNotEmpty(consumerToken.getOpenid())) {
+            ApiVO apiVO = accountView.checkOpenId(consumerToken);
+            if (apiVO.isSucc()) {
+                //已有账号
+                Object obj = apiVO.getObject1(Object.class);
+                if (obj instanceof User) {
+                    User consumer = (User) obj;
+                    // 处理用户权限
+                    List<GrantedAuthority> authorities = new ArrayList<>();
+                    for (String role : consumer.getRoles()) {
+                        authorities.add(new SimpleGrantedAuthority(role));
+                    }
+                    loadedUser = new ConsumerUser(
+                            StrUtil.isEmpty(consumer.getMobile()) ? consumerToken.getOpenid() : consumer.getMobile(),
+                            consumer.getPwd(), consumer.getEnable(), consumer.getNonExpire(),
+                            true, consumer.getNonLock(), authorities, consumer.getConsumerId(),
+                            logtype, System.currentTimeMillis());
+                    return loadedUser;
+                } else if (obj instanceof UserDetails) {
+                    return (UserDetails) obj;
+                } else {
+                    throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+                            "或者org.springframework.security.core.userdetails.UserDetails实现类" +
+                            "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
+                }
+            }
+        }
+        //第三方登录+短信登录
+        if (consumerToken != null) {
+            //没有->创建账号
+            consumerToken.isReg = true;
+            ApiVO apiVO = accountView.addConsumer(consumerToken);
+            if (apiVO.isSucc()) {
+                Object obj = apiVO.getObject1(Object.class);
+                if (obj instanceof User) {
+                    User consumer = (User) obj;
+                    loadedUser = display(consumerToken, consumer);
+                    return loadedUser;
+                } else if (obj instanceof UserDetails) {
+                    return (UserDetails) obj;
+                } else {
+                    throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+                            "或者org.springframework.security.core.userdetails.UserDetails实现类" +
+                            "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
+                }
+            } else {
+                throw new ThirdPartyAuthorizationException(apiVO.getMsg());
+            }
         }
         return loadedUser;
     }
@@ -249,7 +282,7 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
      * @param consumer      实际用户信息
      * @return response User
      */
-    private UserDetails display(ConsumerToken consumerToken, User consumer) {
+    protected UserDetails display(ConsumerToken consumerToken, User consumer) {
         // 处理用户权限
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : consumer.getRoles()) {
