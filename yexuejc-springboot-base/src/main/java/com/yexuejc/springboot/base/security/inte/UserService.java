@@ -18,7 +18,7 @@ public interface UserService {
      * @param username 登录账号
      * @return
      */
-    User getConsumerByUserName(String username);
+    Object getConsumerByUserName(String username);
 
     /**
      * 校验短信验证码=>短信登录
