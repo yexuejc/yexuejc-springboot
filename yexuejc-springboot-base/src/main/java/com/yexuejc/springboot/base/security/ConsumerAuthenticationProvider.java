@@ -178,15 +178,14 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
                 throw notFound;
             } else {
                 try {
-                    third(consumerToken, loadedUser, logtype);
+                    return third(consumerToken, loadedUser, logtype);
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (e instanceof ThirdPartyAuthorizationException) {
                         throw e;
                     }
-                    throw new ThirdPartyAuthorizationException("登录失败，请稍后重试");
+                    throw new ThirdPartyAuthorizationException(e.getMessage());
                 }
-                throw notFound;
             }
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(
@@ -211,10 +210,10 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
         //其他方式登录:查询账号 没有->创建账号
         //第三方登录
         if (consumerToken != null && StrUtil.isNotEmpty(consumerToken.getOpenid())) {
-            ApiVO apiVO = accountView.checkOpenId(consumerToken);
-            if (apiVO.isSucc()) {
+            Object obj = accountView.checkOpenId(consumerToken);
+            if (obj != null) {
+
                 //已有账号
-                Object obj = apiVO.getObject1(Object.class);
                 if (obj instanceof User) {
                     User consumer = (User) obj;
                     // 处理用户权限
@@ -229,7 +228,8 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
                             logtype, System.currentTimeMillis());
                     return loadedUser;
                 } else if (obj instanceof UserDetails) {
-                    return (UserDetails) obj;
+                    loadedUser = (UserDetails) obj;
+                    return loadedUser;
                 } else {
                     throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
                             "或者org.springframework.security.core.userdetails.UserDetails实现类" +
@@ -241,25 +241,26 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
         if (consumerToken != null) {
             //没有->创建账号
             consumerToken.isReg = true;
-            ApiVO apiVO = accountView.addConsumer(consumerToken);
-            if (apiVO.isSucc()) {
-                Object obj = apiVO.getObject1(Object.class);
+            Object obj = accountView.addConsumer(consumerToken);
+            if (obj != null) {
                 if (obj instanceof User) {
                     User consumer = (User) obj;
                     loadedUser = display(consumerToken, consumer);
                     return loadedUser;
                 } else if (obj instanceof UserDetails) {
-                    return (UserDetails) obj;
+                    loadedUser = (UserDetails) obj;
+                    return loadedUser;
                 } else {
                     throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
                             "或者org.springframework.security.core.userdetails.UserDetails实现类" +
                             "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
                 }
             } else {
-                throw new ThirdPartyAuthorizationException(apiVO.getMsg());
+                throw new ThirdPartyAuthorizationException("第三方登录失败");
             }
+        } else {
+            throw new ThirdPartyAuthorizationException();
         }
-        return loadedUser;
     }
 
     private void prepareTimingAttackProtection() {

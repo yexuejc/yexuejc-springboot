@@ -35,7 +35,7 @@ public class UserDetailsManager extends InMemoryUserDetailsManager {
         return loadUser(username);
     }
 
-    protected ConsumerUser loadUser(String username) {
+    protected ConsumerUser loadUser(String username) throws UsernameNotFoundException{
         Object user = userService.getConsumerByUserName(username);
         if (user instanceof User) {
             User consumer = (User) user;
