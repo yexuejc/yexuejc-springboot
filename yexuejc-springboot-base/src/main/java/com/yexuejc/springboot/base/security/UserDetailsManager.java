@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class UserDetailsManager extends InMemoryUserDetailsManager {
 
-    private final UserService userService;
+    protected final UserService userService;
 
     public UserDetailsManager(UserService userService) {
         this.userService = userService;

@@ -51,12 +51,12 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
      * PasswordEncoder#matches(CharSequence, String)}  on when the user is
      * not found to avoid SEC-2056.
      */
-    private static final String USER_NOT_FOUND_PASSWORD = "userNotFoundPassword";
+    protected static final String USER_NOT_FOUND_PASSWORD = "userNotFoundPassword";
 
     // ~ Instance fields
     // ================================================================================================
 
-    private PasswordEncoder passwordEncoder;
+    protected PasswordEncoder passwordEncoder;
 
     /**
      * The password used to perform
@@ -65,10 +65,10 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
      * {@link PasswordEncoder} implementations will short circuit if the password is not
      * in a valid format.
      */
-    private volatile String userNotFoundEncodedPassword;
+    protected volatile String userNotFoundEncodedPassword;
 
-    private UserDetailsService userDetailsService;
-    private final UserService accountView;
+    protected UserDetailsService userDetailsService;
+    protected final UserService accountView;
 
 
     public ConsumerAuthenticationProvider(UserDetailsService userDetailsService, UserService accountView) {
@@ -263,13 +263,13 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
         }
     }
 
-    private void prepareTimingAttackProtection() {
+    protected void prepareTimingAttackProtection() {
         if (this.userNotFoundEncodedPassword == null) {
             this.userNotFoundEncodedPassword = this.passwordEncoder.encode(USER_NOT_FOUND_PASSWORD);
         }
     }
 
-    private void mitigateAgainstTimingAttack(UsernamePasswordAuthenticationToken authentication) {
+    protected void mitigateAgainstTimingAttack(UsernamePasswordAuthenticationToken authentication) {
         if (authentication.getCredentials() != null) {
             String presentedPassword = authentication.getCredentials().toString();
             this.passwordEncoder.matches(presentedPassword, "{MD5}" + this.userNotFoundEncodedPassword);
