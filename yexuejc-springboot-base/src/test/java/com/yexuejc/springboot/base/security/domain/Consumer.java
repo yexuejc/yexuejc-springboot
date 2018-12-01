@@ -238,6 +238,7 @@ public class Consumer extends Model<Consumer> implements User {
         return this;
     }
 
+    @Override
     public List<String> getRoles() {
         return roles;
     }

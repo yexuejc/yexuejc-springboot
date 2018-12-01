@@ -47,6 +47,11 @@ public class MySecurityConfig extends SecurityConfig {
     @Qualifier(MutiRedisAutoConfiguration.BEAN_REDIS_TEMPLATE0)
     private RedisTemplate<Object, Object> redisTemplate0;
 
+    @Override
+    protected RedisTemplate<Object, Object> getRedisDB() {
+        return redisTemplate0;
+    }
+
     /**
      * 保存登录信息至redis
      *
@@ -184,4 +189,5 @@ public class MySecurityConfig extends SecurityConfig {
             response.getWriter().close();
         });
     }
+
 }

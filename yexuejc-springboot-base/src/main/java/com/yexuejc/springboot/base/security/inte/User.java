@@ -3,6 +3,8 @@ package com.yexuejc.springboot.base.security.inte;
 import java.util.List;
 
 /**
+ * 登录用户接口
+ *
  * @author maxf
  * @version 1.0
  * @ClassName User

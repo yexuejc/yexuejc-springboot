@@ -1,12 +1,10 @@
 package com.yexuejc.springboot.base.security;
 
-import com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration;
 import com.yexuejc.springboot.base.security.inte.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -39,10 +38,6 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    @Qualifier(MutiRedisAutoConfiguration.BEAN_REDIS_TEMPLATE0)
-    private RedisTemplate<Object, Object> redisTemplate0;
-
 
     @Bean
     public static NoOpPasswordEncoder passwordEncoder() {
@@ -58,20 +53,49 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetailsService userDetailsService = new UserDetailsManager(getUserService());
-        auth.authenticationProvider(new ConsumerAuthenticationProvider(userDetailsService, getUserService()));
+        UserDetailsService userDetailsService = createUserDetailsManager();
+        AuthenticationProvider authenticationProvider = createConsumerAuthenticationProvider(userDetailsService);
+        auth.authenticationProvider(authenticationProvider);
         auth.userDetailsService(userDetailsService);
+    }
+
+    /**
+     * 初始化 AuthenticationProvider
+     *
+     * @param userDetailsService
+     * @return
+     */
+    protected AuthenticationProvider createConsumerAuthenticationProvider(UserDetailsService userDetailsService) {
+        return new ConsumerAuthenticationProvider(userDetailsService, getUserService());
+    }
+
+    /**
+     * 初始化 UserDetailsService
+     *
+     * @return
+     */
+    protected UserDetailsService createUserDetailsManager() {
+        return new UserDetailsManager(getUserService());
     }
 
 
     @Bean
     public ConsumerAuthenticationProcessingFilter consumerAuthenticationProcessingFilter(
             AuthenticationManager authenticationManager) throws Exception {
-        ConsumerAuthenticationProcessingFilter filter = new ConsumerAuthenticationProcessingFilter
-                (authenticationManager);
+        ConsumerAuthenticationProcessingFilter filter = createConsumerAuthenticationProcessingFilter(authenticationManager);
         filter.setAuthenticationManager(this.authenticationManager());
         loginHodler(filter);
         return filter;
+    }
+
+    /**
+     * 初始化 ConsumerAuthenticationProcessingFilter
+     *
+     * @param authenticationManager
+     * @return
+     */
+    protected ConsumerAuthenticationProcessingFilter createConsumerAuthenticationProcessingFilter(AuthenticationManager authenticationManager) {
+        return new ConsumerAuthenticationProcessingFilter(authenticationManager);
     }
 
     /**
@@ -88,8 +112,7 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
-        LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint = new LoginUrlAuthenticationEntryPoint
-                ("/login");
+        LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint = new LoginUrlAuthenticationEntryPoint("/login");
         return loginUrlAuthenticationEntryPoint;
     }
 
@@ -134,13 +157,29 @@ public abstract class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and().servletApi().disable()
                 .requestCache().disable()
-                .securityContext().securityContextRepository(new ConsumerSecurityContextRepository(redisTemplate0))
+                .securityContext().securityContextRepository(createConsumerSecurityContextRepository())
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterAt(consumerAuthenticationProcessingFilter(super.authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
     }
+
+    /**
+     * 创建 SecurityContextRepository
+     *
+     * @return
+     */
+    protected SecurityContextRepository createConsumerSecurityContextRepository() {
+        return new ConsumerSecurityContextRepository(getRedisDB());
+    }
+
+    /**
+     * 初始化放置用户信息的reids库
+     *
+     * @return
+     */
+    protected abstract RedisTemplate<Object, Object> getRedisDB();
 
 
     @Override
