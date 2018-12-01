@@ -4,6 +4,7 @@ import com.yexuejc.base.pojo.ApiVO;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.constant.BizConsts;
 import com.yexuejc.springboot.base.constant.LogTypeConsts;
+import com.yexuejc.springboot.base.exception.ClassConvertExeption;
 import com.yexuejc.springboot.base.exception.ThirdPartyAuthorizationException;
 import com.yexuejc.springboot.base.security.inte.User;
 import com.yexuejc.springboot.base.security.inte.UserService;
@@ -50,12 +51,12 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
      * PasswordEncoder#matches(CharSequence, String)}  on when the user is
      * not found to avoid SEC-2056.
      */
-    private static final String USER_NOT_FOUND_PASSWORD = "userNotFoundPassword";
+    protected static final String USER_NOT_FOUND_PASSWORD = "userNotFoundPassword";
 
     // ~ Instance fields
     // ================================================================================================
 
-    private PasswordEncoder passwordEncoder;
+    protected PasswordEncoder passwordEncoder;
 
     /**
      * The password used to perform
@@ -64,10 +65,10 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
      * {@link PasswordEncoder} implementations will short circuit if the password is not
      * in a valid format.
      */
-    private volatile String userNotFoundEncodedPassword;
+    protected volatile String userNotFoundEncodedPassword;
 
-    private UserDetailsService userDetailsService;
-    private final UserService accountView;
+    protected UserDetailsService userDetailsService;
+    protected final UserService accountView;
 
 
     public ConsumerAuthenticationProvider(UserDetailsService userDetailsService, UserService accountView) {
@@ -177,46 +178,14 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
                 throw notFound;
             } else {
                 try {
-                    //其他方式登录:查询账号 没有->创建账号
-                    //第三方登录
-                    if (consumerToken != null && StrUtil.isNotEmpty(consumerToken.getOpenid())) {
-                        ApiVO apiVO = accountView.checkOpenId(consumerToken);
-                        if (apiVO.isSucc()) {
-                            //已有账号
-                            User consumer = apiVO.getObject1(User.class);
-                            // 处理用户权限
-                            List<GrantedAuthority> authorities = new ArrayList<>();
-                            for (String role : consumer.getRoles()) {
-                                authorities.add(new SimpleGrantedAuthority(role));
-                            }
-                            loadedUser = new ConsumerUser(
-                                    StrUtil.isEmpty(consumer.getMobile()) ? consumerToken.getOpenid() : consumer.getMobile(),
-                                    consumer.getPwd(), consumer.getEnable(), consumer.getNonExpire(),
-                                    true, consumer.getNonLock(), authorities, consumer.getConsumerId(),
-                                    logtype, System.currentTimeMillis());
-                            return loadedUser;
-                        }
-                    }
-                    //第三方登录+短信登录
-                    if (consumerToken != null) {
-                        //没有->创建账号
-                        consumerToken.isReg = true;
-                        ApiVO apiVO = accountView.addConsumer(consumerToken);
-                        if (apiVO.isSucc()) {
-                            loadedUser = display(consumerToken, apiVO.getObject1(User.class));
-                            return loadedUser;
-                        } else {
-                            throw new ThirdPartyAuthorizationException(apiVO.getMsg());
-                        }
-                    }
+                    return third(consumerToken, loadedUser, logtype);
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (e instanceof ThirdPartyAuthorizationException) {
                         throw e;
                     }
-                    throw new ThirdPartyAuthorizationException("登录失败，请稍后重试");
+                    throw new ThirdPartyAuthorizationException(e.getMessage());
                 }
-                throw notFound;
             }
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(
@@ -229,13 +198,78 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
         return loadedUser;
     }
 
-    private void prepareTimingAttackProtection() {
+    /**
+     * 第三方登录处理=>登录用户为空，此方法处理返回登录用户
+     *
+     * @param consumerToken 登录信息
+     * @param loadedUser    登录用户（为空时进入此方法）
+     * @param logtype       登录方式
+     * @return 登录用户
+     */
+    protected UserDetails third(ConsumerToken consumerToken, UserDetails loadedUser, String logtype) {
+        //其他方式登录:查询账号 没有->创建账号
+        //第三方登录
+        if (consumerToken != null && StrUtil.isNotEmpty(consumerToken.getOpenid())) {
+            Object obj = accountView.checkOpenId(consumerToken);
+            if (obj != null) {
+
+                //已有账号
+                if (obj instanceof User) {
+                    User consumer = (User) obj;
+                    // 处理用户权限
+                    List<GrantedAuthority> authorities = new ArrayList<>();
+                    for (String role : consumer.getRoles()) {
+                        authorities.add(new SimpleGrantedAuthority(role));
+                    }
+                    loadedUser = new ConsumerUser(
+                            StrUtil.isEmpty(consumer.getMobile()) ? consumerToken.getOpenid() : consumer.getMobile(),
+                            consumer.getPwd(), consumer.getEnable(), consumer.getNonExpire(),
+                            true, consumer.getNonLock(), authorities, consumer.getConsumerId(),
+                            logtype, System.currentTimeMillis());
+                    return loadedUser;
+                } else if (obj instanceof UserDetails) {
+                    loadedUser = (UserDetails) obj;
+                    return loadedUser;
+                } else {
+                    throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+                            "或者org.springframework.security.core.userdetails.UserDetails实现类" +
+                            "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
+                }
+            }
+        }
+        //第三方登录+短信登录
+        if (consumerToken != null) {
+            //没有->创建账号
+            consumerToken.isReg = true;
+            Object obj = accountView.addConsumer(consumerToken);
+            if (obj != null) {
+                if (obj instanceof User) {
+                    User consumer = (User) obj;
+                    loadedUser = display(consumerToken, consumer);
+                    return loadedUser;
+                } else if (obj instanceof UserDetails) {
+                    loadedUser = (UserDetails) obj;
+                    return loadedUser;
+                } else {
+                    throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+                            "或者org.springframework.security.core.userdetails.UserDetails实现类" +
+                            "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
+                }
+            } else {
+                throw new ThirdPartyAuthorizationException("第三方登录失败");
+            }
+        } else {
+            throw new ThirdPartyAuthorizationException();
+        }
+    }
+
+    protected void prepareTimingAttackProtection() {
         if (this.userNotFoundEncodedPassword == null) {
             this.userNotFoundEncodedPassword = this.passwordEncoder.encode(USER_NOT_FOUND_PASSWORD);
         }
     }
 
-    private void mitigateAgainstTimingAttack(UsernamePasswordAuthenticationToken authentication) {
+    protected void mitigateAgainstTimingAttack(UsernamePasswordAuthenticationToken authentication) {
         if (authentication.getCredentials() != null) {
             String presentedPassword = authentication.getCredentials().toString();
             this.passwordEncoder.matches(presentedPassword, "{MD5}" + this.userNotFoundEncodedPassword);
@@ -249,7 +283,7 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
      * @param consumer      实际用户信息
      * @return response User
      */
-    private UserDetails display(ConsumerToken consumerToken, User consumer) {
+    protected UserDetails display(ConsumerToken consumerToken, User consumer) {
         // 处理用户权限
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (String role : consumer.getRoles()) {

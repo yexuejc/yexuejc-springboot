@@ -20,37 +20,37 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
     // ~ Static fields/initializers
     // =====================================================================================
 
-    public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
-    public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
+    protected static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
+    protected static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
     /**
      * 登录方式
      */
-    public static final String SPRING_SECURITY_FORM_LOGTYPE_KEY = "logtype";
-    public static final String SPRING_SECURITY_FORM_OPENID_KEY = "openid";
+    protected static final String SPRING_SECURITY_FORM_LOGTYPE_KEY = "logtype";
+    protected static final String SPRING_SECURITY_FORM_OPENID_KEY = "openid";
     /********************************** 第三方登录时附带信息*************************************/
     /**
      * 头像
      */
-    public static final String SPRING_SECURITY_FORM_HEAD_KEY = "head";
+    protected static final String SPRING_SECURITY_FORM_HEAD_KEY = "head";
     /**
      * 昵称
      */
-    public static final String SPRING_SECURITY_FORM_NICKNAME_KEY = "nickname";
+    protected static final String SPRING_SECURITY_FORM_NICKNAME_KEY = "nickname";
     /**
      * 性别
      */
-    public static final String SPRING_SECURITY_FORM_SEX_KEY = "sex";
+    protected static final String SPRING_SECURITY_FORM_SEX_KEY = "sex";
     /********************************** 第三方登录时附带信息*************************************/
 
-    private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
-    private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
-    private String logtypeParameter = SPRING_SECURITY_FORM_LOGTYPE_KEY;
-    private String openidParameter = SPRING_SECURITY_FORM_OPENID_KEY;
-    private String headParameter = SPRING_SECURITY_FORM_HEAD_KEY;
-    private String nicknameParameter = SPRING_SECURITY_FORM_NICKNAME_KEY;
-    private String sexParameter = SPRING_SECURITY_FORM_SEX_KEY;
-    private boolean postOnly = true;
-    private boolean reverse = true;
+   protected String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
+   protected String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
+   protected String logtypeParameter = SPRING_SECURITY_FORM_LOGTYPE_KEY;
+   protected String openidParameter = SPRING_SECURITY_FORM_OPENID_KEY;
+   protected String headParameter = SPRING_SECURITY_FORM_HEAD_KEY;
+   protected String nicknameParameter = SPRING_SECURITY_FORM_NICKNAME_KEY;
+   protected String sexParameter = SPRING_SECURITY_FORM_SEX_KEY;
+   protected boolean postOnly = true;
+   protected boolean reverse = true;
 
     // ~ Constructors
     // ===================================================================================================
