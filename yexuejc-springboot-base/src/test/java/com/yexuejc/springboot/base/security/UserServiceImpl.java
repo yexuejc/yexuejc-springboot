@@ -13,11 +13,13 @@ import com.yexuejc.springboot.base.constant.LogTypeConsts;
 import com.yexuejc.springboot.base.exception.ThirdPartyAuthorizationException;
 import com.yexuejc.springboot.base.mapper.ConsumerMapper;
 import com.yexuejc.springboot.base.security.domain.Consumer;
-import com.yexuejc.springboot.base.security.inte.User;
 import com.yexuejc.springboot.base.security.inte.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,14 +50,37 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User getConsumerByUserName(String username) {
+    public Object getConsumerByUserName(String username) {
+        if (StrUtil.isEmpty(username)) {
+            throw new UsernameNotFoundException("username为空，一般是第三方登录来的，直接抛出UsernameNotFoundException就是");
+        }
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("mobile", username);
         Consumer consumer = consumerMapper.selectOne(queryWrapper);
-        ArrayList roles =   new ArrayList<>();
+        if (null == consumer) {
+            /**
+             *  1.抛出UsernameNotFoundException这个异常如果是第三方登录会走 {@link #checkOpenId(ConsumerToken)}
+             *  2.抛出其他Exception可以自己到{@link MySecurityConfig#loginHodler(ConsumerAuthenticationProcessingFilter)}
+             *  里面的filter.setAuthenticationFailureHandler()中做特殊处理
+             */
+            throw new UsernameNotFoundException("没有该账号相关信息");
+        }
+        //h2不支持json，人为处理角色
+        ArrayList roles = new ArrayList<>();
         roles.add("ROLE_CONSUMER");
         consumer.setRoles(roles);
-        return consumer;
+        //1.consumer为User的实现类
+//        return consumer;
+
+        //2. 自己创建ConsumerUser，直接返回
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String role : consumer.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        ConsumerUser consumerUser = new ConsumerUser(consumer.getMobile(), consumer.getPwd(),
+                consumer.getEnable(), consumer.getNonExpire(), true, consumer.getNonLock(),
+                authorities, consumer.getConsumerId(), null, System.currentTimeMillis());
+        return consumerUser;
     }
 
     /**
@@ -88,15 +113,14 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 第三方登录
      * 校验openid 根据自己业务做判断
-     * <br/>
-     * 返回：封装登录用户信息到 apiVO.setObject1(User.class) 自己封装登录用户信息
      *
      * @param consumerToken 登录信息
      * @return
      */
     @Override
-    public ApiVO checkOpenId(ConsumerToken consumerToken) {
+    public Object checkOpenId(ConsumerToken consumerToken) {
         ApiVO apiVO = new ApiVO(ApiVO.STATUS.F, "没有找到用户信息");
         switch (consumerToken.getLogtype()) {
             case LogTypeConsts.QQ:
@@ -111,8 +135,88 @@ public class UserServiceImpl implements UserService {
             default:
                 break;
         }
-        return apiVO;
+        if (apiVO.isFail()) {
+            /**
+             * 未查到:
+             * 1.返回null会走（数据库没有这个openid[第三方账号]信息）新增流程 {@link #addConsumer(ConsumerToken)}
+             * 2.也可以自己创建一个带有特殊标识的ConsumerUser，然后在 {@link MySecurityConfig#loginHodler(ConsumerAuthenticationProcessingFilter)}
+             * 里面的filter.setAuthenticationSuccessHandler()中做特殊处理 ps:假装登录成功 :)
+             */
+            return null;
+        }
+        //h2不支持json，人为处理角色
+        ArrayList roles = new ArrayList<>();
+        roles.add("ROLE_CONSUMER");
+        apiVO.getObject1(Consumer.class).setRoles(roles);
+        //根据openid到数据库查到consumer返回
+        return apiVO.getObject1(Consumer.class);
     }
+
+    /**
+     * {@link #checkOpenId(ConsumerToken)} 返回null会走该方法
+     * 没有账号时处理自己的业务，此处必须返回 构造出的登录用户，否则会抛出{@link ThirdPartyAuthorizationException 第三方授权异常}
+     * <br/>
+     *
+     * @param consumerToken 登录信息
+     * @return
+     */
+    @Override
+    public Object addConsumer(ConsumerToken consumerToken) {
+        Consumer consumer = new Consumer();
+        consumer.setConsumerId(StrUtil.genUUID());
+        consumer.setMobile(StrUtil.isNotEmpty(consumerToken.getUsername()) ? consumerToken.getUsername() : consumerToken.getOpenid());
+        consumer.setPwd(StrUtil.toMD5("123456"));
+        consumer.setEnable(true);
+        consumer.setNonExpire(true);
+        consumer.setNonLock(true);
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_CONSUMER");
+        consumer.setRoles(roles);
+        switch (consumerToken.getLogtype()) {
+            case LogTypeConsts.SMS:
+                ApiVO apiVO = checkSmsCode2Redis(BizConsts.CONSUMER_LOGIN_SMS, consumerToken.getUsername(),
+                        consumerToken.getSmscode());
+                if (apiVO.isFail()) {
+                    throw new ThirdPartyAuthorizationException("短信验证码错误");
+                }
+                consumer.setNickname(consumerToken.getUsername());
+                consumer.setHead("/head/def.png");
+                consumer.setRegType(DictRegTypeConsts.DICT_MOBILE);
+                break;
+            case LogTypeConsts.QQ:
+                consumer.setQqId(consumerToken.getOpenid());
+                consumer.setNickname(consumerToken.getNickname());
+                setHeader(consumerToken, consumer, false);
+                setSex(consumerToken, consumer);
+                consumer.setRegType(DictRegTypeConsts.DICT_QQ);
+                break;
+            case LogTypeConsts.WECHAT:
+                consumer.setWechatId(consumerToken.getOpenid());
+                consumer.setNickname(consumerToken.getNickname());
+                setHeader(consumerToken, consumer, false);
+                setSex(consumerToken, consumer);
+                consumer.setRegType(DictRegTypeConsts.DICT_WECHAT);
+                break;
+            case LogTypeConsts.WEIBO:
+                consumer.setWeiboId(consumerToken.getOpenid());
+                consumer.setNickname(consumerToken.getNickname());
+                setHeader(consumerToken, consumer, false);
+                setSex(consumerToken, consumer);
+                consumer.setRegType(DictRegTypeConsts.DICT_WEIBO);
+                break;
+            default:
+                throw new ThirdPartyAuthorizationException("暂不支持该第三方授权");
+        }
+        Integer result = consumerMapper.insert(consumer);
+        if (result < 1) {
+            /**
+             * 会抛出{@link ThirdPartyAuthorizationException 第三方授权异常}
+             */
+            return null;
+        }
+        return consumer;
+    }
+
 
     /**
      * 第三方登录 QQ登录
@@ -168,69 +272,6 @@ public class UserServiceImpl implements UserService {
         if (b && DictRegTypeConsts.DICT_WEIBO.equals(consumer.getRegType())) {
             //如果是微博注册的，登录的同时更新用户信息
             updateConsumer(consumer, consumerToken);
-        }
-        return new ApiVO(ApiVO.STATUS.S).setObject1(consumer);
-    }
-
-
-    /**
-     * 没有账号时处理自己的业务，此次必须返回 构造出的登录用户，否则会抛出{@link ThirdPartyAuthorizationException 第三方授权异常}
-     * <br/>
-     * 返回：封装登录用户信息到 apiVO.setObject1(User.class) 自己封装登录用户信息
-     *
-     * @param consumerToken 登录信息
-     * @return
-     */
-    @Override
-    public ApiVO addConsumer(ConsumerToken consumerToken) {
-        Consumer consumer = new Consumer();
-        consumer.setConsumerId(StrUtil.genUUID());
-        consumer.setMobile(StrUtil.isNotEmpty(consumerToken.getUsername()) ? consumerToken.getUsername() : consumerToken.getOpenid());
-        consumer.setPwd(StrUtil.toMD5("123456"));
-        consumer.setEnable(true);
-        consumer.setNonExpire(true);
-        consumer.setNonLock(true);
-        List<String> roles = new ArrayList<>();
-        roles.add("ROLE_CONSUMER");
-        consumer.setRoles(roles);
-        switch (consumerToken.getLogtype()) {
-            case LogTypeConsts.SMS:
-                ApiVO apiVO = checkSmsCode2Redis(BizConsts.CONSUMER_LOGIN_SMS, consumerToken.getUsername(),
-                        consumerToken.getSmscode());
-                if (apiVO.isFail()) {
-                    return apiVO;
-                }
-                consumer.setNickname(consumerToken.getUsername());
-                consumer.setHead("/head/def.png");
-                consumer.setRegType(DictRegTypeConsts.DICT_MOBILE);
-                break;
-            case LogTypeConsts.QQ:
-                consumer.setQqId(consumerToken.getOpenid());
-                consumer.setNickname(consumerToken.getNickname());
-                setHeader(consumerToken, consumer, false);
-                setSex(consumerToken, consumer);
-                consumer.setRegType(DictRegTypeConsts.DICT_QQ);
-                break;
-            case LogTypeConsts.WECHAT:
-                consumer.setWechatId(consumerToken.getOpenid());
-                consumer.setNickname(consumerToken.getNickname());
-                setHeader(consumerToken, consumer, false);
-                setSex(consumerToken, consumer);
-                consumer.setRegType(DictRegTypeConsts.DICT_WECHAT);
-                break;
-            case LogTypeConsts.WEIBO:
-                consumer.setWeiboId(consumerToken.getOpenid());
-                consumer.setNickname(consumerToken.getNickname());
-                setHeader(consumerToken, consumer, false);
-                setSex(consumerToken, consumer);
-                consumer.setRegType(DictRegTypeConsts.DICT_WEIBO);
-                break;
-            default:
-                return new ApiVO(ApiVO.STATUS.F, "暂不支持的登录方式");
-        }
-        Integer result = consumerMapper.insert(consumer);
-        if (result < 1) {
-            return new ApiVO(ApiVO.STATUS.F, RespsConsts.CODE_FAIL, "登录失败");
         }
         return new ApiVO(ApiVO.STATUS.S).setObject1(consumer);
     }
