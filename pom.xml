@@ -5,7 +5,7 @@
 
     <groupId>com.yexuejc.springboot</groupId>
     <artifactId>yexuejc-springboot-parent</artifactId>
-    <version>1.1.9</version>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
