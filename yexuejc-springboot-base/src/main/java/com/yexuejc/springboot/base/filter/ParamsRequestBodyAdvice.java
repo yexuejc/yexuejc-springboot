@@ -8,6 +8,7 @@ import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.exception.GatewayException;
 import com.yexuejc.springboot.base.util.LogUtil;
 import org.apache.commons.io.IOUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,7 @@ import java.security.interfaces.RSAPrivateKey;
  * @date: 2018/5/12 22:49
  */
 @ControllerAdvice
+@ConditionalOnClass({RequestBodyAdvice.class, HttpHeaders.class, HttpInputMessage.class, HttpMessageConverter.class})
 @EnableConfigurationProperties(RsaProperties.class)
 public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
 
