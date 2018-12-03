@@ -18,6 +18,7 @@ import com.yexuejc.springboot.base.security.inte.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,16 +44,25 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据用户名到数据库查询用户
+     * <p>
+     *     账号未找到，抛出UsernameNotFoundException异常=>会走第三方登录流程
+     * </p>
      *
      * @param username 登录账号
      * @return
      */
     @Override
     public User getConsumerByUserName(String username) {
+        if (StrUtil.isEmpty(username)) {
+            throw new UsernameNotFoundException(username);
+        }
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("mobile", username);
         Consumer consumer = consumerMapper.selectOne(queryWrapper);
-        ArrayList roles =   new ArrayList<>();
+        if (null == consumer) {
+            throw new UsernameNotFoundException(username);
+        }
+        ArrayList roles = new ArrayList<>();
         roles.add("ROLE_CONSUMER");
         consumer.setRoles(roles);
         return consumer;
