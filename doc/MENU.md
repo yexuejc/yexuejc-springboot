@@ -9,7 +9,7 @@
 
 ### 内部集成
 #
-* [2.0.3新增 集成security登录](SECURITY.md)
-
+* [(2.0.3-2.0.5)新增 集成security多方登录](SECURITY.md)
+单独使用例子工程：[https://github.com/yexuejc/springboot-security-login-simple](https://github.com/yexuejc/springboot-security-login-simple)
 * [1.0.6新增 针对API请求安全解决方案](PARAMS_RSA_DECRYPT_ENCRYPT.md)<br/>
 * [1.0.6新增 加密功能](PARAMS_RSA_DECRYPT_ENCRYPT.md)
