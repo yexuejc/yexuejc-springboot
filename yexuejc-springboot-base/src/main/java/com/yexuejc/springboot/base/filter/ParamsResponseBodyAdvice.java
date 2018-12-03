@@ -6,6 +6,7 @@ import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.util.LogUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import java.util.Map;
  * @date: 2018/5/12 22:50
  */
 @ControllerAdvice
+@ConditionalOnClass({ResponseBodyAdvice.class, ServerHttpRequest.class, ServerHttpResponse.class, MediaType.class})
 @EnableConfigurationProperties(RsaProperties.class)
 public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
 

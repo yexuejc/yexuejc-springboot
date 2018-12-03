@@ -34,10 +34,10 @@ import java.util.Map;
  */
 public class ConsumerSecurityContextRepository implements SecurityContextRepository {
     protected final Log logger = LogFactory.getLog(this.getClass());
-    private static final String TOKEN = "token";
-    private static final String ROLES = "roles";
+    protected static final String TOKEN = "token";
+    protected static final String ROLES = "roles";
 
-    private final RedisTemplate<Object, Object> redisTemplate0;
+    protected final RedisTemplate<Object, Object> redisTemplate0;
 
     public ConsumerSecurityContextRepository(RedisTemplate<Object, Object> redisTemplate0) {
         this.redisTemplate0 = redisTemplate0;
