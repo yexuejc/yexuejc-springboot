@@ -54,7 +54,6 @@ import java.util.List;
 @EnableConfigurationProperties(ValidationFilterProperties.class)
 public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
 
-
     public WebAutoConfiguration(ValidationFilterProperties properties) {
         this.properties = properties;
     }
@@ -94,7 +93,6 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
     }
 
     /******************************************编码部分*****************************************************/
-
 
     /**
      * 添加拦截器
@@ -148,40 +146,14 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
         return registration;
     }
 
-    @Bean
     /**
      * 是否开启HTTPS（SSL）请求证书验证忽略：默认false
      */
+    @Bean
     @ConditionalOnProperty(name = "yexuejc.enable.ssl-ignore", matchIfMissing = false)
     public SSLUtil getSslUtil() {
         return new SSLUtil();
     }
 
-    /**
-     * 全局异常处理
-     */
-    @ControllerAdvice
-    static class GlobalExceptionHandler {
-        private static final String ERROR_MSG = "系统错误，请联系管理员";
 
-        /**
-         * 出现异常时用于返回Json数据
-         *
-         * @param e
-         * @return
-         */
-        @ExceptionHandler(value = Throwable.class)
-        @ResponseBody
-        @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-        public Resps<Object> jsonErrorHandler(Throwable e) {
-            LogUtil.exceptionLogger.error("", e);
-            if (e instanceof GatewayException) {
-                return Resps.error(StrUtil.setStr(e.getMessage(), ERROR_MSG));
-            } else if (e instanceof HttpRequestMethodNotSupportedException) {
-                return Resps.error("请求方式错误");
-            }
-            return Resps.error(ERROR_MSG);
-        }
-
-    }
 }

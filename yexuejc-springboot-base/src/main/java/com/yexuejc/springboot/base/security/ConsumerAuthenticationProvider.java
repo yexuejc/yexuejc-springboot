@@ -4,10 +4,11 @@ import com.yexuejc.base.pojo.ApiVO;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.constant.BizConsts;
 import com.yexuejc.springboot.base.constant.LogTypeConsts;
-import com.yexuejc.springboot.base.exception.ClassConvertExeption;
+import com.yexuejc.springboot.base.exception.ClassConvertException;
 import com.yexuejc.springboot.base.exception.ThirdPartyAuthorizationException;
 import com.yexuejc.springboot.base.security.inte.User;
 import com.yexuejc.springboot.base.security.inte.UserService;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -70,7 +71,6 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
     protected UserDetailsService userDetailsService;
     protected final UserService accountView;
 
-
     public ConsumerAuthenticationProvider(UserDetailsService userDetailsService, UserService accountView) {
 //        super();
         super.setHideUserNotFoundExceptions(false);
@@ -104,10 +104,14 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        String requestPwd = authentication.getCredentials().toString();
+        String requestPwd = null;
+        try {
+            requestPwd = authentication.getCredentials().toString();
+        } catch (Exception e) {
+            throw new BadCredentialsException("密码错误");
+        }
         if (authentication instanceof ConsumerToken) {
             ConsumerToken consumerToken = (ConsumerToken) authentication;
-
 
             displyAuthenticationChecks(consumerToken, requestPwd, userDetails.getPassword());
         }
@@ -231,7 +235,7 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
                     loadedUser = (UserDetails) obj;
                     return loadedUser;
                 } else {
-                    throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+                    throw new ClassConvertException("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
                             "或者org.springframework.security.core.userdetails.UserDetails实现类" +
                             "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
                 }
@@ -251,7 +255,7 @@ public class ConsumerAuthenticationProvider extends AbstractUserDetailsAuthentic
                     loadedUser = (UserDetails) obj;
                     return loadedUser;
                 } else {
-                    throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+                    throw new ClassConvertException("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
                             "或者org.springframework.security.core.userdetails.UserDetails实现类" +
                             "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
                 }

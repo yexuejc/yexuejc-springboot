@@ -1,6 +1,7 @@
 package com.yexuejc.springboot.base.security;
 
 import com.yexuejc.springboot.base.constant.LogTypeConsts;
+import com.yexuejc.springboot.base.exception.ParamsException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.ProviderManager;
@@ -42,15 +43,15 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
     protected static final String SPRING_SECURITY_FORM_SEX_KEY = "sex";
     /********************************** 第三方登录时附带信息*************************************/
 
-   protected String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
-   protected String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
-   protected String logtypeParameter = SPRING_SECURITY_FORM_LOGTYPE_KEY;
-   protected String openidParameter = SPRING_SECURITY_FORM_OPENID_KEY;
-   protected String headParameter = SPRING_SECURITY_FORM_HEAD_KEY;
-   protected String nicknameParameter = SPRING_SECURITY_FORM_NICKNAME_KEY;
-   protected String sexParameter = SPRING_SECURITY_FORM_SEX_KEY;
-   protected boolean postOnly = true;
-   protected boolean reverse = true;
+    protected String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;
+    protected String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
+    protected String logtypeParameter = SPRING_SECURITY_FORM_LOGTYPE_KEY;
+    protected String openidParameter = SPRING_SECURITY_FORM_OPENID_KEY;
+    protected String headParameter = SPRING_SECURITY_FORM_HEAD_KEY;
+    protected String nicknameParameter = SPRING_SECURITY_FORM_NICKNAME_KEY;
+    protected String sexParameter = SPRING_SECURITY_FORM_SEX_KEY;
+    protected boolean postOnly = true;
+    protected boolean reverse = true;
 
     // ~ Constructors
     // ===================================================================================================
@@ -125,7 +126,11 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
         switch (logtype) {
             case LogTypeConsts.SMS:
                 //短信登录
-                username = obtainUsername(request);
+                try {
+                    username = obtainUsername(request);
+                } catch (Exception e) {
+                    throw new ParamsException();
+                }
                 smscode = obtainPassword(request);
                 break;
             case LogTypeConsts.QQ:
@@ -151,7 +156,11 @@ public class ConsumerAuthenticationProcessingFilter extends AbstractAuthenticati
                 break;
             default:
                 //默认账号+密码登录
-                username = obtainUsername(request).trim();
+                try {
+                    username = obtainUsername(request).trim();
+                } catch (Exception e) {
+                    throw new ParamsException();
+                }
                 password = obtainPassword(request);
                 break;
         }

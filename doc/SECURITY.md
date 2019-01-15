@@ -163,7 +163,7 @@ yexuejc.redis.db1=true
 spring.redis.jedis.pool.max-active=100
 spring.redis.jedis.pool.max-idle=10
 spring.redis.jedis.pool.min-idle=3
-spring.redis.host=121.42.165.89
+spring.redis.host=103.45.101.109
 spring.redis.password=
 spring.redis.port=16379
 

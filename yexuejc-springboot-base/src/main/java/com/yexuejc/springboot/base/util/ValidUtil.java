@@ -2,6 +2,8 @@ package com.yexuejc.springboot.base.util;
 
 import com.yexuejc.base.constant.RespsConsts;
 import com.yexuejc.base.http.Resps;
+import com.yexuejc.springboot.base.constant.RespsCode;
+import com.yexuejc.springboot.base.http.ResponseParams;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -28,6 +30,7 @@ public class ValidUtil {
      * @param errors
      * @return
      * @throws IOException
+     * @since 1.0
      */
     public static Resps<Object> errResps(HttpServletResponse response, Errors errors) throws IOException {
         List<ObjectError> objectErrorList = errors.getAllErrors();
@@ -37,6 +40,23 @@ public class ValidUtil {
         }
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         return Resps.error(RespsConsts.CODE_VALIDATION, err);
+    }
+
+    /**
+     * 参数加密使用； 检查SpringMVC提交是否有数据校验错误，如果有错则直接response错误信息
+     *
+     * @param errors
+     * @return
+     * @throws IOException
+     * @since 2.0
+     */
+    public static ResponseParams errResps2( Errors errors) {
+        List<ObjectError> objectErrorList = errors.getAllErrors();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < objectErrorList.size(); i++) {
+            sb.append(i + 1 + ":" + objectErrorList.get(i).getDefaultMessage() + ";");
+        }
+        return ResponseParams.resps(RespsCode.MIS_PARAM.code, sb.toString().substring(0, sb.length() - 1));
     }
 
 }

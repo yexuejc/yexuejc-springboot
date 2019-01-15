@@ -1,7 +1,7 @@
 package com.yexuejc.springboot.base.security;
 
 import com.yexuejc.base.util.StrUtil;
-import com.yexuejc.springboot.base.exception.ClassConvertExeption;
+import com.yexuejc.springboot.base.exception.ClassConvertException;
 import com.yexuejc.springboot.base.exception.UserNotAuthoriayException;
 import com.yexuejc.springboot.base.security.inte.User;
 import com.yexuejc.springboot.base.security.inte.UserService;
@@ -35,7 +35,7 @@ public class UserDetailsManager extends InMemoryUserDetailsManager {
         return loadUser(username);
     }
 
-    protected ConsumerUser loadUser(String username) throws UsernameNotFoundException{
+    protected ConsumerUser loadUser(String username) throws UsernameNotFoundException {
         Object user = userService.getConsumerByUserName(username);
         if (user instanceof User) {
             User consumer = (User) user;
@@ -57,7 +57,7 @@ public class UserDetailsManager extends InMemoryUserDetailsManager {
         } else if (user instanceof ConsumerUser) {
             return (ConsumerUser) user;
         } else {
-            throw new ClassConvertExeption("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
+            throw new ClassConvertException("获取登录用户信息返回结果类型必须是com.yexuejc.springboot.base.security.inte.User实现类" +
                     "或者com.yexuejc.springboot.base.security.ConsumerUser继承类");
         }
     }

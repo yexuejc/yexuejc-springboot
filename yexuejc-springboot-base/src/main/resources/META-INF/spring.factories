@@ -4,5 +4,6 @@ com.yexuejc.springboot.base.autoconfigure.OssAutoConfiguration,\
 com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration,\
 com.yexuejc.springboot.base.filter.ParamsRequestBodyAdvice,\
 com.yexuejc.springboot.base.filter.ParamsResponseBodyAdvice,\
-com.yexuejc.springboot.base.autoconfigure.MnsAutoConfiguration
+com.yexuejc.springboot.base.autoconfigure.MnsAutoConfiguration,\
+com.yexuejc.springboot.base.exception.GlobalExceptionHandler
 

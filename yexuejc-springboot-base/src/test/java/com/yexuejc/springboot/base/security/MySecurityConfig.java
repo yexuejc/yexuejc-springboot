@@ -1,6 +1,5 @@
 package com.yexuejc.springboot.base.security;
 
-import com.yexuejc.base.constant.RespsConsts;
 import com.yexuejc.base.http.Resps;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.JwtUtil;
@@ -8,8 +7,8 @@ import com.yexuejc.base.util.RegexUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration;
 import com.yexuejc.springboot.base.constant.BizConsts;
-import com.yexuejc.springboot.base.exception.ThirdPartyAuthorizationException;
-import com.yexuejc.springboot.base.exception.UserNotAuthoriayException;
+import com.yexuejc.springboot.base.constant.RespsCode;
+import com.yexuejc.springboot.base.http.ResponseParams;
 import com.yexuejc.springboot.base.security.inte.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -112,27 +111,23 @@ public class MySecurityConfig extends SecurityConfig {
         filter.setAuthenticationFailureHandler((request, response, exception) -> {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            Resps resps = new Resps();
+            ResponseParams resps;
             if (exception instanceof DisabledException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_IS_LOCK_MSG});
+                resps = ResponseParams.resps(RespsCode.INS_AUTH).setSub(RespsCode.IA_IS_LOCK);
             } else if (exception instanceof AccountExpiredException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_IS_EXPIRE_MSG});
+                resps = ResponseParams.resps(RespsCode.INS_AUTH).setSub(RespsCode.IA_IS_EXPIRE);
             } else if (exception instanceof CredentialsExpiredException) {
-                resps.setErr(BizConsts.BASE_LOGIN_IS_EXPIRE_CODE, new String[]{BizConsts.BASE_LOGIN_IS_EXPIRE_MSG});
+                resps = ResponseParams.resps(RespsCode.INS_AUTH).setSub(RespsCode.IA_LOGIN_IS_EXPIRE);
             } else if (exception instanceof LockedException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_IS_LOCKED_MSG});
+                resps = ResponseParams.resps(RespsCode.INS_AUTH).setSub(RespsCode.IA_IS_LOCKED);
             } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_CREDENTIALS_NOT_FOUND_MSG});
-            } else if (exception instanceof ThirdPartyAuthorizationException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{exception.getMessage()});
+                resps = ResponseParams.resps(RespsCode.INS_AUTH).setSub(RespsCode.IA_CREDENTIALS_NOT_FOUND);
             } else if (exception instanceof BadCredentialsException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_PWD_IS_ERR_MSG});
+                resps = ResponseParams.resps(RespsCode.BIZ_ERR).setSub(RespsCode.BE_PWD_IS_ERR);
             } else if (exception instanceof UsernameNotFoundException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_ACCOUNT_NOT_FOUND_MSG});
-            } else if (exception instanceof UserNotAuthoriayException) {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{exception.getMessage()});
+                resps = ResponseParams.resps(RespsCode.BIZ_ERR).setSub(RespsCode.BE_NOT_FOUND);
             } else {
-                resps.setErr(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_SYS_ERR_MSG});
+                resps = ResponseParams.resps(RespsCode.INS_AUTH);
             }
             response.getWriter().write(JsonUtil.obj2Json(resps));
             response.getWriter().close();
@@ -171,10 +166,7 @@ public class MySecurityConfig extends SecurityConfig {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(401);
             response.getWriter().write(
-                    JsonUtil.obj2Json(
-                            Resps.error(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_NOT_LOGIN_MSG})
-                    )
-            );
+                    ResponseParams.resps(RespsCode.PERMISSION_DENIED, RespsCode.PD_NOT_LOGIN).toString());
             response.getWriter().close();
         });
         // 已登录，但当前用户没有访问的某个接口的权限时的处理
@@ -182,10 +174,7 @@ public class MySecurityConfig extends SecurityConfig {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(401);
             response.getWriter().write(
-                    JsonUtil.obj2Json(
-                            Resps.error(RespsConsts.CODE_FAIL, new String[]{BizConsts.BASE_NOT_ROLE_MSG})
-                    )
-            );
+                    ResponseParams.resps(RespsCode.PERMISSION_DENIED, RespsCode.PD_NOT_LOGIN).toString());
             response.getWriter().close();
         });
     }
