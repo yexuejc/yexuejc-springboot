@@ -11,6 +11,7 @@ spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. 升级依赖
+2. 出入参加密 ParamsRequestBodyAdvice/ParamsResponseBodyAdvice 增加开关（默认关）
 
 
 #

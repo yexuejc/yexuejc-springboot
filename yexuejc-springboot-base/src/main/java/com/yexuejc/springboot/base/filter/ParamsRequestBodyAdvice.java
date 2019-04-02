@@ -9,6 +9,7 @@ import com.yexuejc.springboot.base.exception.GatewayException;
 import com.yexuejc.springboot.base.util.LogUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +36,7 @@ import java.security.interfaces.RSAPrivateKey;
 @ControllerAdvice
 @ConditionalOnClass({RequestBodyAdvice.class, HttpHeaders.class, HttpInputMessage.class, HttpMessageConverter.class})
 @EnableConfigurationProperties(RsaProperties.class)
+@ConditionalOnProperty(value = "yexuejc.filter.req.enable", matchIfMissing = false)
 public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
 
     private final RsaProperties properties;
@@ -49,12 +51,25 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
     }
 
     @Override
-    public Object handleEmptyBody(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public Object handleEmptyBody(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<?
+            extends HttpMessageConverter<?>> converterType) {
         return body;
     }
 
+    /**
+     * 使用入参加密
+     * 自定义入参的解密方式只需要重写 beforeBodyRead 方法即可
+     *
+     * @param inputMessage
+     * @param parameter
+     * @param targetType
+     * @param converterType
+     * @return
+     * @throws IOException
+     */
     @Override
-    public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
+    public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<?
+            extends HttpMessageConverter<?>> converterType) throws IOException {
         if (properties.isDecrypt()) {
             ParamsPO paramsPO = JsonUtil.json2Obj(IOUtils.toString(inputMessage.getBody(), "UTF-8"), ParamsPO.class);
             //RSA解密
@@ -63,7 +78,8 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
                 RSAPrivateKey rsaPrivateKey = null;
                 if (StrUtil.isEmpty(properties.getPrivateKey())) {
                     rsaPrivateKey = RSA2.getPrivateKey(
-                            this.getClass().getResource(properties.getPrivateKeyPath()).getFile().toString(),
+//                            this.getClass().getResource(properties.getPrivateKeyPath()).getFile().toString(),
+                            this.getClass().getResourceAsStream(properties.getPrivateKeyPath()),
                             properties.getPrivateAlias(),
                             properties.getPrivatePwd());
                 } else {
@@ -92,7 +108,8 @@ public class ParamsRequestBodyAdvice implements RequestBodyAdvice {
     }
 
     @Override
-    public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+    public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<?
+            extends HttpMessageConverter<?>> converterType) {
         return body;
     }
 

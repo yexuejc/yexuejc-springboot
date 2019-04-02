@@ -7,6 +7,7 @@ import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.util.LogUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -32,6 +33,7 @@ import java.util.Map;
 @ControllerAdvice
 @ConditionalOnClass({ResponseBodyAdvice.class, ServerHttpRequest.class, ServerHttpResponse.class, MediaType.class})
 @EnableConfigurationProperties(RsaProperties.class)
+@ConditionalOnProperty(value = "yexuejc.filter.resp.enable", matchIfMissing = false)
 public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
 
     private final RsaProperties properties;
@@ -47,7 +49,8 @@ public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType,
+                                  ServerHttpRequest request, ServerHttpResponse response) {
         if (returnType.getMethod().isAnnotationPresent(SerializedField.class)) {
             //获取注解配置的包含和去除字段
             SerializedField serializedField = returnType.getMethodAnnotation(SerializedField.class);
@@ -74,7 +77,8 @@ public class ParamsResponseBodyAdvice implements ResponseBodyAdvice {
                         RSAPrivateKey rsaPrivateKey = null;
                         if (StrUtil.isEmpty(properties.getPrivateKey())) {
                             rsaPrivateKey = RSA2.getPrivateKey(
-                                    this.getClass().getResource(properties.getPrivateKeyPath()).getFile().toString(),
+//                                    this.getClass().getResource(properties.getPrivateKeyPath()).getFile().toString(),
+                                    this.getClass().getResourceAsStream(properties.getPrivateKeyPath()),
                                     properties.getPrivateAlias(),
                                     properties.getPrivatePwd());
                         } else {
