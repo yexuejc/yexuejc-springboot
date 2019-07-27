@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ConsumerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.security.domain.Consumer">
+        <id column="consumer_id" property="consumerId"/>
+        <result column="mobile" property="mobile"/>
+        <result column="pwd" property="pwd"/>
+        <result column="is_enable" property="enable"/>
+        <result column="is_non_expire" property="nonExpire"/>
+        <result column="is_non_lock" property="nonLock"/>
+        <result column="wechat_id" property="wechatId"/>
+        <result column="qq_id" property="qqId"/>
+        <result column="weibo_id" property="weiboId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="head" property="head"/>
+        <result column="email" property="email"/>
+        <result column="sex" property="sex"/>
+        <result column="roles" property="roles"
+                typeHandler="com.example.demo.mapper.handler.JsonTypeHandler"/>
+        <result column="pay_pwd" property="payPwd"/>
+        <result column="reg_type" property="regType"/>
+        <result column="source_head" property="sourceHead"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO consumer (consumer_id,
+                              mobile,
+                              pwd,
+                              is_enable,
+                              is_non_expire,
+                              is_non_lock,
+                              wechat_id,
+                              qq_id,
+                              weibo_id,
+                              nickname,
+                              head,
+                              email,
+                              sex,
+                              roles,
+                              pay_pwd,
+                              reg_type,
+                              source_head)
+        VALUES (#{consumerId},
+                #{mobile},
+                #{pwd},
+                #{enable},
+                #{nonExpire},
+                #{nonLock},
+                #{wechatId},
+                #{qqId},
+                #{weiboId},
+                #{nickname},
+                #{head},
+                #{email},
+                #{sex},
+                #{roles,typeHandler=com.example.demo.mapper.handler.JsonTypeHandler},
+                #{payPwd},
+                #{regType},
+                #{sourceHead});
+    </insert>
+
+    <select id="selectOne" resultMap="BaseResultMap">
+        select * from consumer
+        <where>${ew.sqlSegment}</where>
+    </select>
+
+    <update id="updateRoles">
+        update consumer
+        <set>
+            <if test='et.roles!=null'>
+                roles = #{et.roles,typeHandler=com.example.demo.mapper.handler.JsonTypeHandler},
+            </if>
+            mdfy_time=now(),
+            mdfy_by=#{et.mdfyBy}
+        </set>
+        where
+        consumer_id=#{et.consumerId}
+    </update>
+
+</mapper>

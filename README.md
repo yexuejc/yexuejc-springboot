@@ -2,7 +2,7 @@
 
 ### 说明
 >基于springboot版本分别维护1.x(对应springboot1.5.16.RELEASE) 2.x(对应springboot2.0.5.RELEASE) 分支 <br>
->master将继续同步1.x分支（后期获取会同步于2.x）
+>master不再提供源代码，源代码请到具体分支中查看
 
 
 #### 项目介绍
@@ -13,9 +13,9 @@ parent：版本封装<br/>
 base:功能封装
 
 #### 最新版本
-* 1.x yexuejc.springboot.version=1.2.0 <br>
-* 2.x yexuejc.springboot.version=2.0.5 <br>
-* yexuejc.base.version=1.2.4
+* 1.x yexuejc.springboot.version=1.2.1 <br>
+* 2.x yexuejc.springboot.version=2.1.0 <br>
+* yexuejc.base.version=1.3.9
 
 pom.xml
 ```
@@ -105,7 +105,10 @@ pom.xml
 
 
 #### 版本更新
+持续集成中...
+<br/>
+集成到自己项目前请先阅读文档，或者先运行示例工程
 
-[更新记录](UPDATE.md)
+更新记录： [1.x](1.x-update.md)、[2.x](2.x-update.md)
 <br/>
 [相关功能使用指南](doc/MENU.md)

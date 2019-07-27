@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.yexuejc.springboot</groupId>
+    <version>1.0.0</version>
+    <artifactId>yexuejc-springboot-example</artifactId>
+    <packaging>pom</packaging>
+    <name>yexuejc-springboot-example</name>
+
+    <modules>
+        <module>yexuejc-springboot-simple</module>
+        <module>springboot-security-login-simple</module>
+    </modules>
+</project>
