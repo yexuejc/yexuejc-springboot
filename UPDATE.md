@@ -1,77 +1,70 @@
 yexuejc-springboot 更新内容
 -------------------
 
-#### version ：1.2.1
-**time：2019-7-27 09:39:24** <br/>
+#### version ：2.1.0
+**time：2019-7-24 18:30:49** <br/>
 **branch：** master    <br/>
 **关联工程：**    <br/>
 ```
 springboot-base:1.3.9
-spring-boot-starter-parent:1.5.16.RELEASE
+spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. 所有自动装配增加开关，默认不装配。装配方式请参考[本项目自动装配开关](doc/plugin/AutoConfigure.md)
 
+
 #
-#### version ：1.2.0
-**time：2018-12-1 12:19:06** <br/>
+#### version ：2.0.6
+**time：2019年4月2日21:08:453** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.3.9
+spring-boot-starter-parent:2.0.5.RELEASE
+```
+**update：**     <br/>
+1. 升级依赖
+2. 出入参加密 ParamsRequestBodyAdvice/ParamsResponseBodyAdvice 增加开关（默认关）
+
+
+#
+
+#### version ：2.0.5
+**time：2018-12-1 12:27:10** <br/>
 **branch：** master    <br/>
 **关联工程：**    <br/>
 ```
 springboot-base:1.2.4
-spring-boot-starter-parent:1.5.16.RELEASE
+spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. security多方登录第一个稳定版<br/>
 支持账号登录、短信登录、第三方授权openid登录<br/>
 功能链接[security重构-多方登录](doc/SECURITY.md)
-#
 
-#### version ：1.1.6-1.1.9
-**time：2018-11-21 15:03:01** <br/>
+
+#
+#### version ：2.0.3
+**time：2018-11-9 16:58:06** <br/>
 **branch：** master    <br/>
 **关联工程：**    <br/>
 ```
 springboot-base:1.2.1
-spring-boot-starter-parent:1.5.16.RELEASE
-```
-**update：**     <br/>
-1. security 登录开放处理
-#
-
-#### version ：1.1.5
-**time：2018年11月20日20:26:06** <br/>
-**branch：** master    <br/>
-**关联工程：**    <br/>
-```
-springboot-base:1.2.1
-spring-boot-starter-parent:1.5.16.RELEASE
-```
-**update：**     <br/>
-1. 修复security登录
-#
-
-#### version ：1.1.4
-**time：2018-11-9 16:55:53** <br/>
-**branch：** master    <br/>
-**关联工程：**    <br/>
-```
-springboot-base:1.2.1
-spring-boot-starter-parent:1.5.16.RELEASE
+spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. 集成springboot security 多方登录
 2. 文档拆分
+
+
 #
-
-
-#### version ：1.1.3
-**time：2018-10-27 16:40:36** <br/>
+#### version ：2.0.2
+**time：2018-10-27 16:42:08** <br/>
 **branch：** master    <br/>
 **关联工程：**    <br/>
 ```
 springboot-base:1.2.0
-spring-boot-starter-parent:1.5.16.RELEASE
+spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. 日志优化，按天切割日志<br>
@@ -93,28 +86,29 @@ logging.path=/logs/yexuejc-springboot-parent
 ```
 #
 
-#### version ：1.1.2
-**time：2018-9-28 15:23:32** <br/>
-**branch：** master    <br/>
+#### version ：2.0.1
+**time：2018-9-28 15:25:30** <br/>
+**branch：** 2.x    <br/>
 **关联工程：**    <br/>
 ```
 springboot-base:1.1.9
-spring-boot-starter-parent:1.5.16.RELEASE
+spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. 新增声明包
 #
 
-#### version ：1.1.1
-**time：2018-9-26 17:00:38** <br/>
-**branch：** master    <br/>
+#### version ：2.0.0
+**time：2018-9-26 16:55:00** <br/>
+**branch：** 2.x    <br/>
 **关联工程：**    <br/>
 ```
 springboot-base:1.1.9
-spring-boot-starter-parent:1.5.16.RELEASE
+spring-boot-starter-parent:2.0.5.RELEASE
 ```
 **update：**     <br/>
 1. 升级依赖
+2. 2.x分支将基于springboot 2.x 开发
 #
 
 #### version ：1.1.0
