@@ -1,5 +1,5 @@
 #生成私钥
-keytool -genkey -alias lgfishing -keyalg RSA -keystore lgfishing2.keystore -keysize 1024 -validity 36500
+keytool -genkey -alias test -keyalg RSA -keystore test.keystore -keysize 1024 -validity 36500
 ```
 输入密钥库口令:
 再次输入新口令:

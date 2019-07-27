@@ -9,9 +9,9 @@
     <parent>
         <groupId>com.yexuejc.springboot</groupId>
         <artifactId>yexuejc-springboot-parent</artifactId>
-        <version>2.1.0</version>
+        <version>1.2.1</version>
         <!-- 本地打包：使用相对关联路径 -->
-        <!--<relativePath>../</relativePath>-->
+        <!--<relativePath>../../yexuejc</relativePath>-->
     </parent>
 
     <name>${project.artifactId}</name>
