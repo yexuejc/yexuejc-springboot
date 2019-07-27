@@ -1,7 +1,7 @@
 功能目录
 ------------------------
 
-### 第三方集成
+### 第三方集成 -> [第三方集成具体使用](plugin/AutoConfigure.md)
 #
 * [redis 集成](REDIS.md)
 * [Aliyun MNS 消息队列](MNS.md)

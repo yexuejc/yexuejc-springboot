@@ -17,6 +17,7 @@ import com.yexuejc.springboot.base.filter.ValidationFilterProperties;
 import com.yexuejc.springboot.base.interceptor.LogInterceptor;
 import com.yexuejc.springboot.base.util.LogUtil;
 import com.yexuejc.springboot.base.util.SSLUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -52,6 +53,7 @@ import java.util.List;
 @Configuration
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(ValidationFilterProperties.class)
+@ConditionalOnProperty(name = "yexuejc.autoconfigure.webmvc.enable", matchIfMissing = false)
 public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
 
 
@@ -61,6 +63,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
 
     /******************************************编码部分*****************************************************/
     @Bean
+    @ConditionalOnMissingBean
     public HttpMessageConverter<String> responseBodyConverter() {
         StringHttpMessageConverter converter = new StringHttpMessageConverter(
                 Charset.forName("UTF-8"));
@@ -68,6 +71,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         builder.serializationInclusion(JsonInclude.Include.NON_NULL);
@@ -120,6 +124,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(ObjectMapper objectMapper) {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
@@ -138,6 +143,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean
     @ConditionalOnProperty(name = "yexuejc.web.validation-filter.enable", matchIfMissing = true)
     public FilterRegistrationBean validationFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -148,11 +154,12 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
         return registration;
     }
 
-    @Bean
     /**
      * 是否开启HTTPS（SSL）请求证书验证忽略：默认false
      */
-    @ConditionalOnProperty(name = "yexuejc.enable.ssl-ignore", matchIfMissing = false)
+    @ConditionalOnProperty(name = "yexuejc.ssl-ignore.enable", matchIfMissing = false)
+    @Bean
+    @ConditionalOnMissingBean
     public SSLUtil getSslUtil() {
         return new SSLUtil();
     }
@@ -161,6 +168,7 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
      * 全局异常处理
      */
     @ControllerAdvice
+    @ConditionalOnProperty(name = "yexuejc.global.exception.enable", matchIfMissing = true)
     static class GlobalExceptionHandler {
         private static final String ERROR_MSG = "系统错误，请联系管理员";
 
@@ -185,3 +193,5 @@ public class WebAutoConfiguration extends WebMvcConfigurerAdapter {
 
     }
 }
+
+

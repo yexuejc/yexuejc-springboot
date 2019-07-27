@@ -1,12 +1,12 @@
 package com.yexuejc.springboot.base.autoconfigure;
 
+import com.aliyun.mns.client.MNSClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.aliyun.mns.client.MNSClient;
 
 /**
  * 阿里云消息服务MNS相关配置
@@ -20,6 +20,7 @@ import com.aliyun.mns.client.MNSClient;
 @Configuration
 @ConditionalOnClass(MNSClient.class)
 @EnableConfigurationProperties(MnsProperties.class)
+@ConditionalOnProperty(name = "yexuejc.autoconfigure.mns.enable", matchIfMissing = false)
 public class MnsAutoConfiguration {
     private final MnsProperties properties;
 

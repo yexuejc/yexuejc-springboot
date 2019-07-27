@@ -37,6 +37,7 @@ import java.net.UnknownHostException;
 @ConditionalOnClass({JedisConnection.class, RedisOperations.class, Jedis.class})
 @EnableConfigurationProperties(RedisProperties.class)
 @Order(1)
+@ConditionalOnProperty(name = "yexuejc.autoconfigure.redis.enable", matchIfMissing = false)
 public class MutiRedisAutoConfiguration {
     public static final String BEAN_REDIS_FACTORY0 = "redisConnectionFactory";
     public static final String BEAN_REDIS_TEMPLATE0 = "redisTemplate";
