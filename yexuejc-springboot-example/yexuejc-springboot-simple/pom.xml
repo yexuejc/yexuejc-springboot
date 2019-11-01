@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.yexuejc.springboot</groupId>
         <artifactId>yexuejc-springboot-parent</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
     </parent>
     <groupId>top.yexuejc</groupId>
     <artifactId>yexuejc-springboot-simple</artifactId>
