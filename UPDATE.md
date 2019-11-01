@@ -1,6 +1,17 @@
 yexuejc-springboot 更新内容
 -------------------
 
+#### version ：2.1.1
+**time：2019-11-1 13:32:07** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.3.9
+spring-boot-starter-parent:2.0.5.RELEASE
+```
+**update：**     <br/>
+1. redis 配置修改，增加开关，更兼容
+
 #### version ：2.1.0
 **time：2019-7-24 18:30:49** <br/>
 **branch：** master    <br/>
