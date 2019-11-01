@@ -73,6 +73,7 @@ public class MutiRedisAutoConfiguration {
 
     @Configuration
     @ConditionalOnClass(GenericObjectPool.class)
+    @ConditionalOnProperty(name = "yexuejc.autoconfigure.redis.enable", matchIfMissing = false)
     protected static class RedisConnectionConfiguration {
 
         private final RedisProperties properties;
@@ -163,6 +164,7 @@ public class MutiRedisAutoConfiguration {
      * Standard Redis configuration.
      */
     @Configuration
+    @ConditionalOnProperty(name = "yexuejc.autoconfigure.redis.enable", matchIfMissing = false)
     protected static class RedisConfiguration {
 
         @Primary
