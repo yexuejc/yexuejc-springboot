@@ -306,6 +306,6 @@
 
     <modules>
         <module>yexuejc-springboot-base</module>
-        <module>yexuejc-springboot-example</module>
+        <!--<module>yexuejc-springboot-example</module>-->
     </modules>
 </project>
