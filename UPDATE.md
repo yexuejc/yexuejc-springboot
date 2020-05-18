@@ -1,6 +1,18 @@
 yexuejc-springboot 更新内容
 -------------------
 
+#### version ：2.1.2
+**time：2020-5-18 12:18:14** <br/>
+**branch：** master    <br/>
+**关联工程：**    <br/>
+```
+springboot-base:1.4.0
+spring-boot-starter-parent:1.5.16.RELEASE
+```
+**update：**     <br/>
+1. 更新依赖
+2. 更新仓库地址 https://nexus.yexuejc.club/ 为 https://nexus.yexuejc.top/
+
 #### version ：2.1.1
 **time：2019-11-1 13:32:07** <br/>
 **branch：** master    <br/>
