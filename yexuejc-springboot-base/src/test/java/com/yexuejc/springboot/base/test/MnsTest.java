@@ -4,11 +4,9 @@ import com.aliyun.mns.model.Message;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.autoconfigure.MnsFacade;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +18,6 @@ import java.util.Map;
  * @Description
  * @date 2018/11/1 14:25
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class MnsTest {
 

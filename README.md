@@ -14,8 +14,8 @@ base:功能封装
 
 #### 最新版本
 * 1.x yexuejc.springboot.version=1.2.2 <br>
-* 2.x yexuejc.springboot.version=2.1.1 <br>
-* yexuejc.base.version=1.3.9
+* 2.x yexuejc.springboot.version=2.1.3 <br>
+* yexuejc.base.version=1.5.0-jre8
 
 pom.xml
 ```
@@ -36,16 +36,16 @@ pom.xml
     <!--推荐使用-->
     <!--https://gitee.com/incloudcode/yexuejc-base.git-->
     <dependency>
-        <groupId>com.yexuejc.base</groupId>
+        <groupId>top.yexuejc</groupId>
         <artifactId>yexuejc-base</artifactId>
         <version>${yexuejc.base.version}</version>
     </dependency>
 </dependencies>
 <repositories>
     <repository>
-        <id>yexuejc-nexus-public</id>
-        <name>yexuejc-nexus-public</name>
-        <url>https://nexus.yexuejc.club/repository/maven-public/</url>
+        <id>yexuejc-maven</id>
+        <name>yexuejc maven</name>
+        <url>https://nexus.yexuejc.top/repository/maven-public/</url>
     </repository>
 </repositories>
 ```

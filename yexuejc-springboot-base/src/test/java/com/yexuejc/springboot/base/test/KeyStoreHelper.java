@@ -1,7 +1,5 @@
 package com.yexuejc.springboot.base.test;
 
-import sun.misc.BASE64Encoder;
-
 import java.io.*;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -9,8 +7,11 @@ import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.util.Base64;
+
 /**
  * 生成公钥工具; http://bijian1013.iteye.com/blog/2339874
+ *
  * @ClassName: KeyStoreHelper
  * @Description:
  * @author: maxf
@@ -33,7 +34,7 @@ public class KeyStoreHelper {
         byte[] publicKeyBytes = publicKey.getEncoded();
 //        byte[] privateKeyBytes = privateKey.getEncoded();
 
-        String publicKeyBase64 = new BASE64Encoder().encode(publicKeyBytes);
+        String publicKeyBase64 = Base64.getEncoder().encodeToString(publicKeyBytes);
 //        String privateKeyBase64 = new BASE64Encoder().encode(privateKeyBytes);
 
         System.out.println("publicKeyBase64.length():" + publicKeyBase64.length());
