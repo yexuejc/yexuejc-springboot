@@ -6,11 +6,9 @@ import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.autoconfigure.OssFacade;
 import com.yexuejc.springboot.base.exception.ImageException;
 import com.yexuejc.springboot.base.util.LogUtil;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,7 +21,6 @@ import java.io.InputStream;
  * @Description
  * @date 2018/11/1 14:58
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class OssTest {
     @Autowired
@@ -32,11 +29,11 @@ public class OssTest {
     /**
      * 上传图片到oss
      * <p>
-     *     这里是模拟微信登录时，获取到微信头像地址，缓存到base64，然后上传到OSS
+     * 这里是模拟微信登录时，获取到微信头像地址，缓存到base64，然后上传到OSS
      * </p>
      */
     @Test
-    public void put(){
+    public void put() {
         putOss4Head(null, "https://avatar.csdn.net/7/8/1/3_wulex.jpg");
     }
 

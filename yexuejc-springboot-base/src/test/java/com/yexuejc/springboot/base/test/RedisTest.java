@@ -3,8 +3,7 @@ package com.yexuejc.springboot.base.test;
 import com.yexuejc.base.util.JsonUtil;
 import com.yexuejc.base.util.StrUtil;
 import com.yexuejc.springboot.base.autoconfigure.MutiRedisAutoConfiguration;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,6 @@ import java.util.concurrent.TimeUnit;
  * @Description
  * @date 2018/11/1 11:16
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisTest {
     /**

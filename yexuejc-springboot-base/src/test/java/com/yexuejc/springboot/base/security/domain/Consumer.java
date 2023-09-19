@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.yexuejc.base.util.JsonUtil;
+import com.yexuejc.springboot.base.mapper.handler.JsonTypeHandler;
 import com.yexuejc.springboot.base.security.inte.User;
 
 import java.io.Serializable;
@@ -27,7 +28,7 @@ public class Consumer extends Model<Consumer> implements User {
     /**
      * 用户id
      */
-    @TableId(value = "consumer_id", type = IdType.UUID)
+    @TableId(value = "consumer_id", type = IdType.ASSIGN_UUID)
     private String consumerId;
     /**
      * 手机号
@@ -92,7 +93,7 @@ public class Consumer extends Model<Consumer> implements User {
     /**
      * 角色、权限
      */
-    @TableField(value = "roles", el = "roles,typeHandler=com.yexuejc.guansc.core.mybatis.handler.JsonTypeHandler")
+    @TableField(value = "roles", typeHandler = JsonTypeHandler.class)
     private List<String> roles;
     /**
      * 支付密码
@@ -157,18 +158,15 @@ public class Consumer extends Model<Consumer> implements User {
         return this;
     }
 
-
     public Consumer setEnable(boolean enable) {
         this.enable = enable;
         return this;
     }
 
-
     public Consumer setNonExpire(boolean nonExpire) {
         this.nonExpire = nonExpire;
         return this;
     }
-
 
     public Consumer setNonLock(boolean nonLock) {
         this.nonLock = nonLock;
@@ -276,7 +274,7 @@ public class Consumer extends Model<Consumer> implements User {
     }
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.consumerId;
     }
 }
