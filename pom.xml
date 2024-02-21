@@ -54,7 +54,7 @@
         <alipay-sdk-java.version>4.38.76.ALL</alipay-sdk-java.version>
         <!-- 微信相关 -->
         <WXPay-SDK-Java.version>0.0.4</WXPay-SDK-Java.version>
-        <postgresql.version>42.6.0</postgresql.version>
+        <postgresql.version>42.7.2</postgresql.version>
         <!--thymeleaf 相关-->
         <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>3.3.0</thymeleaf-layout-dialect.version>
